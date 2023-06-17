@@ -9,6 +9,13 @@ public class PurchaseOrderDTO {
   private long supplier;
   private long distributor;
 
+  public PurchaseOrderDTO(double total, Date orderDate, long supplier, long distributor) {
+    this.total = total;
+    this.orderDate = orderDate;
+    this.supplier = supplier;
+    this.distributor = distributor;
+  }
+
   public double getTotal() {
     return total;
   }

@@ -37,11 +37,14 @@ public class PurchaseOrder {
   @Column(name="order_status")
   private OrderStatus orderStatus;
 
+  @Column(name = "po_file_name")
   private String poFileName;
 
+  @Column(name = "po_file_type")
   private String poFileType;
 
   @Lob
+  @Column(name = "po_file_data")
   private byte[] poFileData;
 
   public PurchaseOrder() {
