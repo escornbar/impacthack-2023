@@ -49,7 +49,7 @@ export function SiteHeader() {
           </nav>
 
           <DropdownMenu>
-            <DropdownMenuTrigger >
+            <DropdownMenuTrigger className="lg:hidden">
               <Button variant="ghost" size={'sm'} className="">
                 <Menu className="w-5 h-5" />
               </Button>
