@@ -80,7 +80,7 @@ export default function AssessCreditScore() {
           <h3 className="my-8 text-2xl font-bold tracking-tight">
             Credit Factors
           </h3>
-          <div className="grid w-full grid-cols-3 items-center gap-1.5">
+          <div className="grid items-center w-full grid-cols-3 gap-4">
             {creditFactors.map((creditFactor, index) => (
               <CreditFactorCard
                 key={index}
