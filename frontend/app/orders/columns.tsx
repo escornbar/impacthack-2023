@@ -35,10 +35,10 @@ export const columns: ColumnDef<Order>[] = [
       return <p className="text-right">{row.getValue("id")}</p>
     },
   },
-  { accessorKey: "orderdate", header: "Date Placed", cell: ({row}) => {
-    return <p>{row.getValue("orderdate").toISOString().split('T')[0]}</p>
-  },
- },
+//   { accessorKey: "orderdate", header: "Date Placed", cell: ({row}) => {
+//     return <p>{row.getValue("orderdate").toISOString().split('T')[0]}</p>
+//   },
+//  },
   { accessorKey: "customer", header: "Customer" },
   {
     accessorKey: "total",
