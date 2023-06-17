@@ -17,16 +17,20 @@ public class Company {
   private String name;
 
   @Enumerated(EnumType.STRING)
-  @Column(name="companyType")
+  @Column(name="company_type")
   private CompanyType companyType;
+
+  @Column(name="contact_person")
+  private String contactPerson;
 
   public Company() {
 
   }
 
-  public Company(String name, CompanyType companyType) {
+  public Company(String name, CompanyType companyType, String contactPerson) {
     this.name = name;
     this.companyType = companyType;
+    this.contactPerson = contactPerson;
   }
 
   public long getId() {
@@ -49,12 +53,21 @@ public class Company {
     this.companyType = companyType;
   }
 
-  @Override
-  public String toString() {
+  public String getContactPerson() {
+    return contactPerson;
+  }
+
+  public void setContactPerson(String contactPerson) {
+    this.contactPerson = contactPerson;
+  }
+
+  @java.lang.Override
+  public java.lang.String toString() {
     return "Company{" +
             "companyId=" + companyId +
             ", name='" + name + '\'' +
             ", companyType=" + companyType +
+            ", contactPerson='" + contactPerson + '\'' +
             '}';
   }
 }

@@ -61,7 +61,7 @@ public class CompanyController {
 	public ResponseEntity<Company> createCompany(@RequestBody Company company) {
 		try {
 			Company _company = companyRepository
-					.save(new Company(company.getTitle(), company.getCompanyType()));
+					.save(new Company(company.getTitle(), company.getCompanyType(), company.getContactPerson()));
 			return new ResponseEntity<>(_company, HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -75,6 +75,7 @@ public class CompanyController {
 		if (companyData.isPresent()) {
 			Company _company = companyData.get();
 			_company.setTitle(company.getTitle());
+			_company.setContactPerson(company.getContactPerson());
 			_company.setCompanyType(company.getCompanyType());
 			return new ResponseEntity<>(companyRepository.save(_company), HttpStatus.OK);
 		} else {
