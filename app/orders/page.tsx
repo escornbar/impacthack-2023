@@ -1,4 +1,3 @@
-import { DataTablePagination } from "@/components/data-table-pagination"
 import { Order, columns } from "./columns"
 import { DataTable } from "./data-table"
 
