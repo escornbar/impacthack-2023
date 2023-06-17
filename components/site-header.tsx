@@ -69,7 +69,7 @@ export function SiteHeader() {
               </DropdownMenuGroup>
               <DropdownMenuSeparator />
               <DropdownMenuItem>
-                <Link href="#">
+                <Link href={siteConfig.links.github}>
                   <span>GitHub</span>
                 </Link>
               </DropdownMenuItem>
