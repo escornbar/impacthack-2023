@@ -38,9 +38,8 @@ public class Invoice {
   @JoinColumn(name = "distributor_id")
   private Company distributor;
 
-  @OneToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "po_id")
-  private PurchaseOrder purchaseOrder;
+  @Column(name = "po_id")
+  private long purchaseOrderId;
 
   @Enumerated(EnumType.STRING)
   @Column(name="order_status")
@@ -66,23 +65,23 @@ public class Invoice {
 
   }
 
-    public Invoice(double total, Date issuedDate, Company supplier, Company distributor, PurchaseOrder purchaseOrder, double downPayment, double remainingPayment, Date paymentDeadline) {
+    public Invoice(double total, Date issuedDate, Company supplier, Company distributor, long purchaseOrderId, double downPayment, double remainingPayment, Date paymentDeadline) {
     this.total = total;
     this.issuedDate = issuedDate;
     this.supplier = supplier;
     this.distributor = distributor;
-    this.purchaseOrder = purchaseOrder;
+    this.purchaseOrderId = purchaseOrderId;
     this.downPayment = downPayment;
     this.remainingPayment = remainingPayment;
     this.paymentDeadline = paymentDeadline;
   }
 
-  public Invoice(double total, Date issuedDate, Company supplier, Company distributor, PurchaseOrder purchaseOrder, String invoiceFileName, String invoiceFileType, byte[] invoiceFileData, double downPayment, double remainingPayment, Date paymentDeadline) {
+  public Invoice(double total, Date issuedDate, Company supplier, Company distributor, long purchaseOrderId, String invoiceFileName, String invoiceFileType, byte[] invoiceFileData, double downPayment, double remainingPayment, Date paymentDeadline) {
     this.total = total;
     this.issuedDate = issuedDate;
     this.supplier = supplier;
     this.distributor = distributor;
-    this.purchaseOrder = purchaseOrder;
+    this.purchaseOrderId = purchaseOrderId;
     this.invoiceFileName = invoiceFileName;
     this.invoiceFileType = invoiceFileType;
     this.downPayment = downPayment;
@@ -171,12 +170,12 @@ public class Invoice {
     this.remainingPayment = remainingPayment;
   }
 
-  public PurchaseOrder getPurchaseOrder() {
-    return purchaseOrder;
+  public long getPurchaseOrderId() {
+    return purchaseOrderId;
   }
 
-  public void setPurchaseOrder(PurchaseOrder purchaseOrder) {
-    this.purchaseOrder = purchaseOrder;
+  public void setPurchaseOrderId(long purchaseOrderId) {
+    this.purchaseOrderId = purchaseOrderId;
   }
 
   public OrderStatus getOrderStatus() {
@@ -204,7 +203,7 @@ public class Invoice {
             ", paymentDeadline=" + paymentDeadline +
             ", supplier=" + supplier +
             ", distributor=" + distributor +
-            ", purchaseOrder=" + purchaseOrder +
+            ", purchaseOrder=" + purchaseOrderId +
             ", orderStatus=" + orderStatus +
             ", invoiceFileName='" + invoiceFileName + '\'' +
             ", invoiceFileType='" + invoiceFileType + '\'' +
