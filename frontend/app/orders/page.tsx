@@ -1,14 +1,28 @@
 import { Order, columns } from "./columns"
 import { DataTable } from "./data-table"
 
-async function getData(): Promise<Order[]> {
+export async function getData(): Promise<Order[]> {
   // Fetch data from your API here.
   return [
     {
       id: 1,
       orderdate: new Date('2023-06-17T10:30:00Z'),
       customer: "Ah Kok Berhad",
-      items: [],
+      items: [{
+        id: 1,
+        name: "Item 1",
+        unitprice: 100,
+        quantity: 10,
+        total: 1000,
+      },
+      {
+        id: 2,
+        name: "Item 2",
+        unitprice: 100,
+        quantity: 10,
+        total: 1000,
+      },
+    ],
       total: 1000,
       downpayment: 30,
       remaining: 700,

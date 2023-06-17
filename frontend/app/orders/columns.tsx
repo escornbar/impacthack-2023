@@ -1,10 +1,18 @@
 "use client";
 
+import Link from "next/link";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+
+
+
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+
+
+
+
 
 export type Item = {
   id: number
@@ -36,7 +44,7 @@ export const columns: ColumnDef<Order>[] = [
     },
   },
   { accessorKey: "orderdate", header: "Date Placed", cell: ({row}) => {
-    return <p>{row.getValue("orderdate").toISOString().split('T')[0]}</p>
+    return <p>{row.original.orderdate.toISOString().split('T')[0]}</p>
   },
  },
   { accessorKey: "customer", header: "Customer" },
@@ -107,8 +115,7 @@ export const columns: ColumnDef<Order>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
-      const order = row.original
-
+      
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -119,15 +126,16 @@ export const columns: ColumnDef<Order>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            {/* <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
-            >
-              Copy payment ID
-            </DropdownMenuItem> */}
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View order details</DropdownMenuItem>
+            {/* <DropdownMenuItem asChild><Link href={`orders/${row.original.id}`}>View order details</Link></DropdownMenuItem> */}
+            <DropdownMenuItem asChild><Link href={{
+          pathname: `orders/view`,
+          query: {
+            orderid: `${row.original.id}`
+          }
+        }}>View order details</Link></DropdownMenuItem>
             <DropdownMenuItem>Send invoice</DropdownMenuItem>
-            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(order.tracking)}>Copy tracking number</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(row.original.tracking)}>Copy tracking number</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       )
