@@ -58,8 +58,7 @@ export async function getData(): Promise<Invoice[]> {
       PO: await getPO(invoice.purchaseOrderId),
       downPayment: invoice.downPayment,
       remainingPayment: invoice.remainingPayment,
-      // tracking: (trackings.find((tracking: any) => tracking.purchaseOrderId === invoice.purchaseOrderId).trackingNo) == `undefined` ? "Not Applicable" : (trackings.find((tracking: any) => tracking.purchaseOrderId === invoice.purchaseOrderId).trackingNo),
-      tracking: (trackings.find((tracking) => tracking.purchaseOrderId === invoice.purchaseOrderId) !== undefined) ? trackings.find((tracking) => tracking.purchaseOrderId === invoice.purchaseOrderId).trackingNo : "Not applicable",
+      tracking: (trackings.find((tracking: any) => tracking.purchaseOrderId === invoice.purchaseOrderId) !== undefined) ? trackings.find((tracking: any) => tracking.purchaseOrderId === invoice.purchaseOrderId).trackingNo : "Not applicable",
     }
     data.push(newInvoice)
   })
