@@ -1,12 +1,10 @@
-"use client";
-
-import { useEffect, useState } from "react";
 
 
+import { useEffect, useState } from "react"
+import { Loader2 } from "lucide-react"
 
-import { Invoice, Order, columns } from "./columns";
-import { DataTable } from "./data-table";
-
+import { Invoice, columns } from "./columns"
+import { DataTable } from "./data-table"
 
 export async function getPO(poId: number) {
   const res = await fetch(
@@ -58,11 +56,20 @@ export async function getData(): Promise<Invoice[]> {
       PO: await getPO(invoice.purchaseOrderId),
       downPayment: invoice.downPayment,
       remainingPayment: invoice.remainingPayment,
-      tracking: (trackings.find((tracking: any) => tracking.purchaseOrderId === invoice.purchaseOrderId) !== undefined) ? trackings.find((tracking: any) => tracking.purchaseOrderId === invoice.purchaseOrderId).trackingNo : "Not applicable",
+      tracking:
+        trackings.find(
+          (tracking: any) =>
+            tracking.purchaseOrderId === invoice.purchaseOrderId
+        ) !== undefined
+          ? trackings.find(
+              (tracking: any) =>
+                tracking.purchaseOrderId === invoice.purchaseOrderId
+            ).trackingNo
+          : "Not applicable",
     }
     data.push(newInvoice)
   })
-  console.log(data)
+  // console.log(data)
   return data
   // return [
   //   {
@@ -121,21 +128,21 @@ export async function getData(): Promise<Invoice[]> {
 
 export default async function PurchaseOrder() {
   const data = await getData()
-
   return (
     <>
-      <div className="flex-col md:flex">
-        <div className="flex-1 py-8 pt-6 space-y-4">
-          <div className="flex items-center justify-between space-y-2">
-            <h2 className="text-3xl font-bold tracking-tight">
-              Purchase Orders
-            </h2>
+
+        <div className="flex-col md:flex">
+          <div className="flex-1 py-8 pt-6 space-y-4">
+            <div className="flex items-center justify-between space-y-2">
+              <h2 className="text-3xl font-bold tracking-tight">
+                Purchase Orders
+              </h2>
+            </div>
+          </div>
+          <div className="flex items-center justify-between space-y-2 overflow-x-auto">
+            <DataTable columns={columns} data={data} />
           </div>
         </div>
-        <div className="flex items-center justify-between space-y-2 overflow-x-auto">
-          <DataTable columns={columns} data={data} />
-        </div>
-      </div>
     </>
   )
 }
