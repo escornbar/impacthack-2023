@@ -1,6 +1,5 @@
 package com.impacthack.scf.purchaseOrder;
 
-import java.nio.file.Path;
 import java.util.stream.Stream;
 import java.io.IOException;
 
@@ -19,7 +18,7 @@ public class POFileStorageService {
     String fileName = StringUtils.cleanPath(file.getOriginalFilename());
 
     PurchaseOrder _purchaseOrder = purchaseOrderRepository.save(
-				new PurchaseOrder(purchaseOrderData.getTotal(), purchaseOrderData.getOrderDate(), purchaseOrderData.getSupplier(), purchaseOrderData.getDistributor(), fileName, file.getContentType(), file.getBytes()));
+				new PurchaseOrder(purchaseOrderData.getTotal(), purchaseOrderData.getOrderDate(), purchaseOrderData.getSupplier(), purchaseOrderData.getDistributor(), purchaseOrderData.getPurchaseOrderStatus(), fileName, file.getContentType(), file.getBytes()));
 
       return _purchaseOrder;
   }
