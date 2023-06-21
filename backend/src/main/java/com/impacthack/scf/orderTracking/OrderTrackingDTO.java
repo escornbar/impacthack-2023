@@ -1,48 +1,23 @@
 package com.impacthack.scf.orderTracking;
 
-import jakarta.persistence.*;
-
 import java.util.Date;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.impacthack.scf.orderTrackingStatus.OrderTrackingStatus;
+public class OrderTrackingDTO{
 
-@JsonIgnoreProperties({"hibernateLazyInitializer"})
-@Entity
-@Table(name = "orderTrackings")
-public class OrderTracking {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
   private long orderTrackingId;
-
-  @Column(name = "tracking_no")
   private String trackingNo;
-
-  @Column(name = "po_id")
   private long purchaseOrderId;
-
-  @JsonFormat(pattern="dd-MM-yyyy")
-  @Column(name = "estimated_delivery_date")
   private Date estimatedDeliveryDate;
-
-    @JsonFormat(pattern="dd-MM-yyyy")
-  @Column(name = "actual_delivery_date")
   private Date actualDeliveryDate;
-
-    @Column(name = "remarks")
   private String remarks;
+  private long orderTrackingStatus;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name="order_tracking_status")
-  private OrderTrackingStatus orderTrackingStatus;
-
-  public OrderTracking() {
+  public OrderTrackingDTO() {
 
   }
 
-  public OrderTracking(String trackingNo, long purchaseOrderId, Date estimatedDeliveryDate, Date actualDeliveryDate, String remarks, OrderTrackingStatus orderTrackingStatus) {
+  public OrderTrackingDTO(String trackingNo, long purchaseOrderId, Date estimatedDeliveryDate, Date actualDeliveryDate, String remarks, long orderTrackingStatus) {
     this.trackingNo = trackingNo;
     this.purchaseOrderId = purchaseOrderId;
     this.estimatedDeliveryDate = estimatedDeliveryDate;
@@ -51,11 +26,11 @@ public class OrderTracking {
     this.orderTrackingStatus = orderTrackingStatus;
   }
 
-  public long getOrderTrackingId() {
+  public long getOrderTrackingDTOId() {
     return orderTrackingId;
   }
 
-  public void setOrderTrackingId(long orderTrackingId) {
+  public void setOrderTrackingDTOId(long orderTrackingId) {
     this.orderTrackingId = orderTrackingId;
   }
 
@@ -99,17 +74,17 @@ public class OrderTracking {
     this.remarks = remarks;
   }
 
-  public OrderTrackingStatus getOrderTrackingStatus() {
+  public long getOrderTrackingStatus() {
     return orderTrackingStatus;
   }
 
-  public void setOrderTrackingStatus(OrderTrackingStatus orderTrackingStatus) {
+  public void setOrderTrackingStatus(long orderTrackingStatus) {
     this.orderTrackingStatus = orderTrackingStatus;
   }
 
   @java.lang.Override
   public java.lang.String toString() {
-    return "OrderTracking{" +
+    return "OrderTrackingDTO{" +
             "orderTrackingId=" + orderTrackingId +
             ", trackingNo='" + trackingNo + '\'' +
             ", purchaseOrderId=" + purchaseOrderId +
