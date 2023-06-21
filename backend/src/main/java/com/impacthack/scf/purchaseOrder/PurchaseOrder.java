@@ -1,4 +1,5 @@
 package com.impacthack.scf.purchaseOrder;
+import com.impacthack.scf.purchaseOrderStatus.PurchaseOrderStatus;
 import jakarta.persistence.*;
 
 import java.util.Arrays;
@@ -7,8 +8,8 @@ import java.util.Date;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.impacthack.scf.company.Company;
-import com.impacthack.scf.enums.OrderStatus;
+import com.impacthack.scf.supplier.Supplier;
+import com.impacthack.scf.distributor.Distributor;
 
 @Entity
 @Table(name = "purchaseOrders")
@@ -27,15 +28,15 @@ public class PurchaseOrder {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "supplier_id")
-  private Company supplier;
+  private Supplier supplier;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "distributor_id")
-  private Company distributor;
+  private Distributor distributor;
 
-  @Enumerated(EnumType.STRING)
-  @Column(name="order_status")
-  private OrderStatus orderStatus;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "order_status")
+  private PurchaseOrderStatus purchaseOrderStatus;
 
   @Column(name = "po_file_name")
   private String poFileName;
@@ -51,20 +52,20 @@ public class PurchaseOrder {
 
   }
 
-    public PurchaseOrder(double total, Date orderDate, Company supplier, Company distributor) {
+  public PurchaseOrder(double total, Date orderDate, Supplier supplier, Distributor distributor, PurchaseOrderStatus purchaseOrderStatus) {
     this.total = total;
     this.orderDate = orderDate;
     this.supplier = supplier;
     this.distributor = distributor;
-    this.orderStatus = OrderStatus.PENDING;
+    this.purchaseOrderStatus = purchaseOrderStatus;
   }
 
-  public PurchaseOrder(double total, Date orderDate, Company supplier, Company distributor, String poFileName, String poFileType, byte[] poFileData) {
+  public PurchaseOrder(double total, Date orderDate, Supplier supplier, Distributor distributor, PurchaseOrderStatus purchaseOrderStatus, String poFileName, String poFileType, byte[] poFileData) {
     this.total = total;
     this.orderDate = orderDate;
     this.supplier = supplier;
     this.distributor = distributor;
-    this.orderStatus = OrderStatus.PENDING;
+    this.purchaseOrderStatus = purchaseOrderStatus;
     this.poFileName = poFileName;
     this.poFileType = poFileType;
     this.poFileData = poFileData;
@@ -94,28 +95,28 @@ public class PurchaseOrder {
     this.orderDate = orderDate;
   }
 
-  public Company getSupplier() {
+  public Supplier getSupplier() {
     return supplier;
   }
 
-  public void setSupplier(Company supplier) {
+  public void setSupplier(Supplier supplier) {
     this.supplier = supplier;
   }
 
-  public Company getDistributor() {
+  public Distributor getDistributor() {
     return distributor;
   }
 
-  public void setDistributor(Company distributor) {
+  public void setDistributor(Distributor distributor) {
     this.distributor = distributor;
   }
 
-  public OrderStatus getOrderStatus() {
-    return orderStatus;
+  public PurchaseOrderStatus getPurchaseOrderStatus() {
+    return purchaseOrderStatus;
   }
 
-  public void setOrderStatus(OrderStatus orderStatus) {
-    this.orderStatus = orderStatus;
+  public void setPurchaseOrderStatus(PurchaseOrderStatus purchaseOrderStatus) {
+    this.purchaseOrderStatus = purchaseOrderStatus;
   }
 
   public String getPoFileName() {
@@ -150,7 +151,7 @@ public class PurchaseOrder {
             ", orderDate=" + orderDate +
             ", supplier=" + supplier +
             ", distributor=" + distributor +
-            ", orderStatus=" + orderStatus +
+            ", purchaseOrderStatus=" + purchaseOrderStatus +
             ", poFileName='" + poFileName + '\'' +
             ", poFileType='" + poFileType + '\'' +
             ", poFileData=" + Arrays.toString(poFileData) +

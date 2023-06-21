@@ -1,7 +1,5 @@
 package com.impacthack.scf.purchaseOrder;
 
-import com.impacthack.scf.company.Company;
-import com.impacthack.scf.company.CompanyRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -20,7 +18,17 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-@CrossOrigin(origins = "http://localhost:8081")
+import com.impacthack.scf.supplier.Supplier;
+import com.impacthack.scf.supplier.SupplierRepository;
+
+import com.impacthack.scf.distributor.Distributor;
+import com.impacthack.scf.distributor.DistributorRepository;
+import com.impacthack.scf.purchaseOrderStatus.PurchaseOrderStatus;
+import com.impacthack.scf.purchaseOrderStatus.PurchaseOrderStatusRepository;
+
+
+
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api")
 public class PurchaseOrderController {
@@ -32,7 +40,13 @@ public class PurchaseOrderController {
     private POFileStorageService poFileStorageService;
 
 	  @Autowired
-  private CompanyRepository companyRepository;
+  private SupplierRepository supplierRepository;
+
+  	  @Autowired
+  private DistributorRepository distributorRepository;
+
+  	  @Autowired
+  private PurchaseOrderStatusRepository purchaseOrderStatusRepository;
 
 	@GetMapping("/purchaseOrders")
 	public ResponseEntity<List<PurchaseOrder>> getAllPurchaseOrders() {
@@ -65,15 +79,18 @@ public class PurchaseOrderController {
 	@PostMapping("/purchaseOrders")
 	public ResponseEntity<PurchaseOrder> createPurchaseOrder(@RequestPart("data") PurchaseOrderDTO purchaseOrderDTO,
                          @RequestPart("file") MultipartFile file) {
-			Company supplier = companyRepository.findById(purchaseOrderDTO.getSupplier()).orElse(null);
-			Company distributor = companyRepository.findById(purchaseOrderDTO.getDistributor()).orElse(null);
+			Supplier supplier = supplierRepository.findById(purchaseOrderDTO.getSupplier()).orElse(null);
+			Distributor distributor = distributorRepository.findById(purchaseOrderDTO.getDistributor()).orElse(null);
+
+			PurchaseOrderStatus purchaseOrderStatus = purchaseOrderStatusRepository.findById(purchaseOrderDTO.getPurchaseOrderStatus()).orElse(null);
+
 
 			// Check if the supplier and distributor are found
 			if (supplier == null || distributor == null) {
 				return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 			}
 
-			PurchaseOrder purchaseOrderData = new PurchaseOrder(purchaseOrderDTO.getTotal(), purchaseOrderDTO.getOrderDate(), supplier, distributor);
+			PurchaseOrder purchaseOrderData = new PurchaseOrder(purchaseOrderDTO.getTotal(), purchaseOrderDTO.getOrderDate(), supplier, distributor, purchaseOrderStatus);
 
 			try {
 			PurchaseOrder _purchaseOrder = poFileStorageService.store(file, purchaseOrderData);
@@ -95,7 +112,7 @@ public class PurchaseOrderController {
 			_purchaseOrder.setTotal(purchaseOrder.getTotal());
 			_purchaseOrder.setDistributor(purchaseOrder.getDistributor());
 			_purchaseOrder.setSupplier(purchaseOrder.getSupplier());
-			_purchaseOrder.setOrderStatus(purchaseOrder.getOrderStatus());
+			_purchaseOrder.setPurchaseOrderStatus(purchaseOrder.getPurchaseOrderStatus());
 			_purchaseOrder.setPoFileName(purchaseOrder.getPoFileName());
 			_purchaseOrder.setPoFileType(purchaseOrder.getPoFileType());
 			_purchaseOrder.setPoFileData(purchaseOrder.getPoFileData());

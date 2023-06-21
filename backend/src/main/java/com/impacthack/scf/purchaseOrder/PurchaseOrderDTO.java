@@ -8,12 +8,14 @@ public class PurchaseOrderDTO {
   private Date orderDate;
   private long supplier;
   private long distributor;
+  private long purchaseOrderStatus;
 
-  public PurchaseOrderDTO(double total, Date orderDate, long supplier, long distributor) {
+  public PurchaseOrderDTO(double total, Date orderDate, long supplier, long distributor, long purchaseOrderStatus) {
     this.total = total;
     this.orderDate = orderDate;
     this.supplier = supplier;
     this.distributor = distributor;
+    this.purchaseOrderStatus = purchaseOrderStatus;
   }
 
   public double getTotal() {
@@ -36,15 +38,23 @@ public class PurchaseOrderDTO {
     return supplier;
   }
 
-  public void setSupplierId(long supplier) {
-    this.supplier = supplier;
-  }
-
   public long getDistributor() {
     return distributor;
   }
 
   public void setDistributor(long distributor) {
     this.distributor = distributor;
+  }
+
+  public void setSupplier(long supplier) {
+    this.supplier = supplier;
+  }
+
+  public long getPurchaseOrderStatus() {
+    return purchaseOrderStatus;
+  }
+
+  public void setPurchaseOrderStatus(long purchaseOrderStatus) {
+    this.purchaseOrderStatus = purchaseOrderStatus;
   }
 }
