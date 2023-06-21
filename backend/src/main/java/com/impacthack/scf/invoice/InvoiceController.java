@@ -1,9 +1,13 @@
 package com.impacthack.scf.invoice;
 
-import com.impacthack.scf.company.Company;
-import com.impacthack.scf.company.CompanyRepository;
+import com.impacthack.scf.distributor.Distributor;
+import com.impacthack.scf.invoiceStatus.InvoiceStatus;
+import com.impacthack.scf.invoiceStatus.InvoiceStatusRepository;
 import com.impacthack.scf.purchaseOrder.PurchaseOrder;
 import com.impacthack.scf.purchaseOrder.PurchaseOrderRepository;
+import com.impacthack.scf.purchaseOrderStatus.PurchaseOrderStatus;
+import com.impacthack.scf.supplier.Supplier;
+import com.impacthack.scf.supplier.SupplierRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +27,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-@CrossOrigin(origins = "http://localhost:8081")
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api")
 public class InvoiceController {
@@ -35,7 +39,7 @@ public class InvoiceController {
     private InvoiceFileStorageService invoiceFileStorageService;
 
 	@Autowired
-  	private CompanyRepository companyRepository;
+	InvoiceStatusRepository invoiceStatusRepository;
 
 	@GetMapping("/invoices")
 	public ResponseEntity<List<Invoice>> getAllInvoices() {
@@ -69,15 +73,14 @@ public class InvoiceController {
 	@PostMapping("/invoices")
 	public ResponseEntity<Invoice> createInvoice(@RequestPart("data") InvoiceDTO invoiceDTO, @RequestPart("file") MultipartFile file) {
 
-			Company supplier = companyRepository.findById(invoiceDTO.getSupplier()).orElse(null);
-			Company distributor = companyRepository.findById(invoiceDTO.getDistributor()).orElse(null);
+			InvoiceStatus invoiceStatus = invoiceStatusRepository.findById(invoiceDTO.getInvoiceStatus()).orElse(null);
 
 			// Check if the supplier and distributor are found
-			if (supplier == null || distributor == null) {
+			if (invoiceStatus == null) {
 				return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 			}
 
-			Invoice invoiceData = new Invoice(invoiceDTO.getTotal(), invoiceDTO.getIssuedDate(), supplier, distributor, invoiceDTO.getPurchaseOrderId(), invoiceDTO.getDownPayment(), invoiceDTO.getRemainingPayment(), invoiceDTO.getPaymentDeadline());
+			Invoice invoiceData = new Invoice(invoiceDTO.getTotal(), invoiceDTO.getIssuedDate(), invoiceDTO.getPaymentDeadline(), invoiceDTO.getPurchaseOrderId(), invoiceStatus, invoiceDTO.getDownPayment(), invoiceDTO.getRemainingPayment());
 
 			try {
 			Invoice _invoice = invoiceFileStorageService.store(file, invoiceData);
@@ -96,12 +99,11 @@ public class InvoiceController {
 			Invoice _invoice = invoiceData.get();
 
 			_invoice.setIssuedDate(invoice.getIssuedDate());
-			_invoice.setTotal(invoice.getTotal());
-			_invoice.setDistributor(invoice.getDistributor());
-			_invoice.setSupplier(invoice.getSupplier());
 			_invoice.setDownPayment(invoice.getDownPayment());
+			_invoice.setTotal(invoice.getTotal());
+			_invoice.setPaymentDeadline(invoice.getPaymentDeadline());
 			_invoice.setRemainingPayment(invoice.getRemainingPayment());
-			_invoice.setOrderStatus(invoice.getOrderStatus());
+			_invoice.setInvoiceStatus(invoice.getInvoiceStatus());
 			_invoice.setPurchaseOrderId(invoice.getPurchaseOrderId());
 			_invoice.setInvoiceFileName(invoice.getInvoiceFileName());
 			_invoice.setInvoiceFileType(invoice.getInvoiceFileType());

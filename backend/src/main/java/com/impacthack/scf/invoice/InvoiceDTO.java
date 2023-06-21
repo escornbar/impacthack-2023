@@ -10,16 +10,18 @@ public class InvoiceDTO {
   private long supplier;
   private long distributor;
   private long purchaseOrderId;
+  private long invoiceStatus;
   private double downPayment;
   private double remainingPayment;
 
-  public InvoiceDTO(double total, Date issuedDate, Date paymentDeadline, long supplier, long distributor, long purchaseOrderId, double downPayment, double remainingPayment) {
+  public InvoiceDTO(double total, Date issuedDate, Date paymentDeadline, long supplier, long distributor, long purchaseOrderId, long invoiceStatus, double downPayment, double remainingPayment) {
     this.total = total;
     this.issuedDate = issuedDate;
     this.paymentDeadline = paymentDeadline;
     this.supplier = supplier;
     this.distributor = distributor;
     this.purchaseOrderId = purchaseOrderId;
+    this.invoiceStatus = invoiceStatus;
     this.downPayment = downPayment;
     this.remainingPayment = remainingPayment;
   }
@@ -86,5 +88,13 @@ public class InvoiceDTO {
 
   public void setPaymentDeadline(Date paymentDeadline) {
     this.paymentDeadline = paymentDeadline;
+  }
+
+  public long getInvoiceStatus() {
+    return invoiceStatus;
+  }
+
+  public void setInvoiceStatus(long invoiceStatus) {
+    this.invoiceStatus = invoiceStatus;
   }
 }

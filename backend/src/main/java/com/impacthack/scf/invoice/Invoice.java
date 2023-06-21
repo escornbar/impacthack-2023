@@ -7,9 +7,7 @@ import java.util.Date;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.impacthack.scf.company.Company;
-import com.impacthack.scf.purchaseOrder.PurchaseOrder;
-import com.impacthack.scf.enums.OrderStatus;
+import com.impacthack.scf.invoiceStatus.InvoiceStatus;
 
 @Entity
 @Table(name = "invoices")
@@ -30,20 +28,12 @@ public class Invoice {
   @Column(name = "payment_deadline")
   private Date paymentDeadline;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "supplier_id")
-  private Company supplier;
-
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "distributor_id")
-  private Company distributor;
-
   @Column(name = "po_id")
   private long purchaseOrderId;
 
-  @Enumerated(EnumType.STRING)
-  @Column(name="order_status")
-  private OrderStatus orderStatus;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name="invoice_status")
+  private InvoiceStatus invoiceStatus;
 
   @Column(name = "invoice_file_name")
   private String invoiceFileName;
@@ -65,29 +55,27 @@ public class Invoice {
 
   }
 
-    public Invoice(double total, Date issuedDate, Company supplier, Company distributor, long purchaseOrderId, double downPayment, double remainingPayment, Date paymentDeadline) {
+  public Invoice(double total, Date issuedDate, Date paymentDeadline, long purchaseOrderId, InvoiceStatus invoiceStatus,  double downPayment, double remainingPayment) {
     this.total = total;
     this.issuedDate = issuedDate;
-    this.supplier = supplier;
-    this.distributor = distributor;
+    this.paymentDeadline = paymentDeadline;
     this.purchaseOrderId = purchaseOrderId;
+    this.invoiceStatus = invoiceStatus;
     this.downPayment = downPayment;
     this.remainingPayment = remainingPayment;
-    this.paymentDeadline = paymentDeadline;
   }
 
-  public Invoice(double total, Date issuedDate, Company supplier, Company distributor, long purchaseOrderId, String invoiceFileName, String invoiceFileType, byte[] invoiceFileData, double downPayment, double remainingPayment, Date paymentDeadline) {
+  public Invoice(double total, Date issuedDate, Date paymentDeadline, long purchaseOrderId, InvoiceStatus invoiceStatus, String invoiceFileName, String invoiceFileType, double downPayment, double remainingPayment, byte[] invoiceFileData) {
     this.total = total;
     this.issuedDate = issuedDate;
-    this.supplier = supplier;
-    this.distributor = distributor;
+    this.paymentDeadline = paymentDeadline;
     this.purchaseOrderId = purchaseOrderId;
+    this.invoiceStatus = invoiceStatus;
     this.invoiceFileName = invoiceFileName;
     this.invoiceFileType = invoiceFileType;
     this.downPayment = downPayment;
     this.remainingPayment = remainingPayment;
     this.invoiceFileData = invoiceFileData;
-    this.paymentDeadline = paymentDeadline;
   }
 
   public long getInvoiceId() {
@@ -112,22 +100,6 @@ public class Invoice {
 
   public void setIssuedDate(Date issuedDate) {
     this.issuedDate = issuedDate;
-  }
-
-  public Company getSupplier() {
-    return supplier;
-  }
-
-  public void setSupplier(Company supplier) {
-    this.supplier = supplier;
-  }
-
-  public Company getDistributor() {
-    return distributor;
-  }
-
-  public void setDistributor(Company distributor) {
-    this.distributor = distributor;
   }
 
   public String getInvoiceFileName() {
@@ -178,12 +150,12 @@ public class Invoice {
     this.purchaseOrderId = purchaseOrderId;
   }
 
-  public OrderStatus getOrderStatus() {
-    return orderStatus;
+  public InvoiceStatus getInvoiceStatus() {
+    return invoiceStatus;
   }
 
-  public void setOrderStatus(OrderStatus orderStatus) {
-    this.orderStatus = orderStatus;
+  public void setInvoiceStatus(InvoiceStatus invoiceStatus) {
+    this.invoiceStatus = invoiceStatus;
   }
 
   public Date getPaymentDeadline() {
@@ -201,10 +173,8 @@ public class Invoice {
             ", total=" + total +
             ", issuedDate=" + issuedDate +
             ", paymentDeadline=" + paymentDeadline +
-            ", supplier=" + supplier +
-            ", distributor=" + distributor +
             ", purchaseOrder=" + purchaseOrderId +
-            ", orderStatus=" + orderStatus +
+            ", invoiceStatus=" + invoiceStatus +
             ", invoiceFileName='" + invoiceFileName + '\'' +
             ", invoiceFileType='" + invoiceFileType + '\'' +
             ", downPayment=" + downPayment +

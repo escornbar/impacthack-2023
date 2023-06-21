@@ -19,7 +19,7 @@ public class InvoiceFileStorageService {
     String fileName = StringUtils.cleanPath(file.getOriginalFilename());
 
     Invoice _invoice = invoiceRepository.save(
-				new Invoice(invoiceData.getTotal(), invoiceData.getIssuedDate(), invoiceData.getSupplier(), invoiceData.getDistributor(), invoiceData.getPurchaseOrderId(), fileName, file.getContentType(), file.getBytes(), invoiceData.getDownPayment(), invoiceData.getRemainingPayment(), invoiceData.getPaymentDeadline()));
+				new Invoice(invoiceData.getTotal(), invoiceData.getIssuedDate(), invoiceData.getPaymentDeadline(), invoiceData.getPurchaseOrderId(), invoiceData.getInvoiceStatus(), fileName, file.getContentType(), invoiceData.getDownPayment(), invoiceData.getRemainingPayment(), file.getBytes()));
 
       return _invoice;
   }
