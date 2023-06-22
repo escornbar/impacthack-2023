@@ -7,7 +7,7 @@ public class OrderTrackingDTO{
 
   private long orderTrackingId;
   private String trackingNo;
-  private long purchaseOrderId;
+  private long purchaseOrder;
   private Date estimatedDeliveryDate;
   private Date actualDeliveryDate;
   private String remarks;
@@ -17,9 +17,9 @@ public class OrderTrackingDTO{
 
   }
 
-  public OrderTrackingDTO(String trackingNo, long purchaseOrderId, Date estimatedDeliveryDate, Date actualDeliveryDate, String remarks, long orderTrackingStatus) {
+  public OrderTrackingDTO(String trackingNo, long purchaseOrder, Date estimatedDeliveryDate, Date actualDeliveryDate, String remarks, long orderTrackingStatus) {
     this.trackingNo = trackingNo;
-    this.purchaseOrderId = purchaseOrderId;
+    this.purchaseOrder = purchaseOrder;
     this.estimatedDeliveryDate = estimatedDeliveryDate;
     this.actualDeliveryDate = actualDeliveryDate;
     this.remarks = remarks;
@@ -42,12 +42,12 @@ public class OrderTrackingDTO{
     this.trackingNo = trackingNo;
   }
 
-  public long getPurchaseOrderId() {
-    return purchaseOrderId;
+  public long getPurchaseOrder() {
+    return purchaseOrder;
   }
 
-  public void setPurchaseOrderId(long purchaseOrderId) {
-    this.purchaseOrderId = purchaseOrderId;
+  public void setPurchaseOrder(long purchaseOrder) {
+    this.purchaseOrder = purchaseOrder;
   }
 
   public Date getEstimatedDeliveryDate() {
@@ -87,7 +87,7 @@ public class OrderTrackingDTO{
     return "OrderTrackingDTO{" +
             "orderTrackingId=" + orderTrackingId +
             ", trackingNo='" + trackingNo + '\'' +
-            ", purchaseOrderId=" + purchaseOrderId +
+            ", purchaseOrder=" + purchaseOrder +
             ", estimatedDeliveryDate=" + estimatedDeliveryDate +
             ", actualDeliveryDate=" + actualDeliveryDate +
             ", remarks='" + remarks + '\'' +

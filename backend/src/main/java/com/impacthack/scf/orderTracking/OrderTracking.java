@@ -7,6 +7,7 @@ import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.impacthack.scf.orderTrackingStatus.OrderTrackingStatus;
+import com.impacthack.scf.purchaseOrder.PurchaseOrder;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
@@ -20,8 +21,9 @@ public class OrderTracking {
   @Column(name = "tracking_no")
   private String trackingNo;
 
-  @Column(name = "po_id")
-  private long purchaseOrderId;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name="po_id")
+  private PurchaseOrder purchaseOrder;
 
   @JsonFormat(pattern="dd-MM-yyyy")
   @Column(name = "estimated_delivery_date")
@@ -43,9 +45,9 @@ public class OrderTracking {
 
   }
 
-  public OrderTracking(String trackingNo, long purchaseOrderId, Date estimatedDeliveryDate, Date actualDeliveryDate, String remarks, OrderTrackingStatus orderTrackingStatus) {
+  public OrderTracking(String trackingNo, PurchaseOrder purchaseOrder, Date estimatedDeliveryDate, Date actualDeliveryDate, String remarks, OrderTrackingStatus orderTrackingStatus) {
     this.trackingNo = trackingNo;
-    this.purchaseOrderId = purchaseOrderId;
+    this.purchaseOrder = purchaseOrder;
     this.estimatedDeliveryDate = estimatedDeliveryDate;
     this.actualDeliveryDate = actualDeliveryDate;
     this.remarks = remarks;
@@ -68,12 +70,12 @@ public class OrderTracking {
     this.trackingNo = trackingNo;
   }
 
-  public long getPurchaseOrderId() {
-    return purchaseOrderId;
+  public PurchaseOrder getPurchaseOrder() {
+    return purchaseOrder;
   }
 
-  public void setPurchaseOrderId(long purchaseOrderId) {
-    this.purchaseOrderId = purchaseOrderId;
+  public void setPurchaseOrder(PurchaseOrder purchaseOrder) {
+    this.purchaseOrder = purchaseOrder;
   }
 
   public Date getEstimatedDeliveryDate() {
@@ -113,7 +115,7 @@ public class OrderTracking {
     return "OrderTracking{" +
             "orderTrackingId=" + orderTrackingId +
             ", trackingNo='" + trackingNo + '\'' +
-            ", purchaseOrderId=" + purchaseOrderId +
+            ", purchaseOrderId=" + purchaseOrder +
             ", estimatedDeliveryDate=" + estimatedDeliveryDate +
             ", actualDeliveryDate=" + actualDeliveryDate +
             ", remarks='" + remarks + '\'' +
