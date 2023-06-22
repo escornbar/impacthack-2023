@@ -1,47 +1,72 @@
 "use client";
 
+import Link from "next/link";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+
+
+
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
-export type Item = {
+
+
+
+
+// export type Item = {
+//   id: number
+//   name: string
+//   unitprice: number
+//   quantity: number
+//   total: number
+// }
+
+// export type Order = {
+//   id: number
+//   orderdate: Date
+//   items: Item[]
+//   total: number
+//   downpayment: number
+//   remaining: number
+//   status: "Placed" | "Preparing" | "Shipped" | "Delivered" | "Completed"
+//   tracking: string
+//   bank: "Down Payment Requested" | "Down Payment Received" | "Full Payment Requested" | "Full Payment Received"
+//   customer: string
+// }
+
+export type Invoice = {
   id: number
-  name: string
-  unitprice: number
-  quantity: number
   total: number
+  issuedDate: Date
+  paymentDeadline: Date
+  supplier: string
+  distributor: string
+  purchaseOrderId: number
+  PO: any
+  downPayment: number
+  remainingPayment: any
+  tracking?: any
 }
 
-export type Order = {
-  id: number
-  orderdate: Date
-  items: Item[]
-  total: number
-  downpayment: number
-  remaining: number
-  status: "Placed" | "Preparing" | "Shipped" | "Delivered" | "Completed"
-  tracking: string
-  bank: "Down Payment Requested" | "Down Payment Received" | "Full Payment Requested" | "Full Payment Received"
-  customer: string
-}
-
-export const columns: ColumnDef<Order>[] = [
+export const columns: ColumnDef<Invoice>[] = [
   {
-    accessorKey: "id",
+    accessorKey: "purchaseOrderId",
     header: "Order ID",
     cell: ({ row }) => {
-      return <p className="text-right">{row.getValue("id")}</p>
+      return <p className="text-right">{row.original.purchaseOrderId}</p>
     },
   },
-//   { accessorKey: "orderdate", header: "Date Placed", cell: ({row}) => {
-//     return <p>{row.getValue("orderdate").toISOString().split('T')[0]}</p>
-//   },
-//  },
-  { accessorKey: "customer", header: "Customer" },
   {
-    accessorKey: "total",
+    accessorKey: "PO.orderDate",
+    header: "Date Placed",
+    cell: ({ row }) => {
+      return <p>{row.original.PO.orderDate}</p>
+    },
+  },
+  { accessorKey: "PO.distributor.title", header: "Customer" },
+  {
+    accessorKey: "PO.total",
     header: ({ column }) => {
       return (
         <Button
@@ -54,18 +79,24 @@ export const columns: ColumnDef<Order>[] = [
       )
     },
     cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("total"))
+      const amount = parseFloat(row.original.PO.total)
       const formatted = new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "MYR",
       }).format(amount)
 
-      return <div className="font-medium">{formatted}</div>
+      return <div className="font-medium text-center">{formatted}</div>
     },
   },
-  { accessorKey: "downpayment", header: "Down Payment (%)" },
   {
-    accessorKey: "remaining",
+    accessorKey: "downPayment",
+    header: "Down Payment (%)",
+    cell: ({ row }) => {
+      return <p className="text-center">{row.original.downPayment}</p>
+    },
+  },
+  {
+    accessorKey: "remainingPayment",
     header: ({ column }) => {
       return (
         <Button
@@ -78,37 +109,39 @@ export const columns: ColumnDef<Order>[] = [
       )
     },
     cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("remaining"))
+      const amount = parseFloat(row.original.remainingPayment)
       const formatted = new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "MYR",
       }).format(amount)
 
-      return <div className="font-bold text-destructive">{formatted}</div>
+      return (
+        <div className="font-bold text-center text-destructive">
+          {formatted}
+        </div>
+      )
     },
   },
   {
-    accessorKey: "status",
+    accessorKey: "PO.orderStatus",
     header: "Order Status",
     cell: ({ row }) => {
       return (
         <Badge
           variant={
-            row.getValue("status") == "Completed" ? "success" : "default"
+            row.original.PO.orderStatus == "Completed" ? "success" : "default"
           }
         >
-          {row.getValue("status")}
+          {row.original.PO.orderStatus}
         </Badge>
       )
     },
   },
   { accessorKey: "tracking", header: "Tracking Number" },
-  { accessorKey: "bank", header: "Bank Status" },
+  // { accessorKey: "bank", header: "Bank Status" },
   {
     id: "actions",
     cell: ({ row }) => {
-      const order = row.original
-
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -119,15 +152,28 @@ export const columns: ColumnDef<Order>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            {/* <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
-            >
-              Copy payment ID
-            </DropdownMenuItem> */}
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View order details</DropdownMenuItem>
+            {/* <DropdownMenuItem asChild><Link href={`orders/${row.original.id}`}>View order details</Link></DropdownMenuItem> */}
+            <DropdownMenuItem asChild>
+              <Link
+                href={{
+                  pathname: `orders/view`,
+                  query: {
+                    orderid: `${row.original.PO.id}`,
+                  },
+                }}
+              >
+                View order details
+              </Link>
+            </DropdownMenuItem>
             <DropdownMenuItem>Send invoice</DropdownMenuItem>
-            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(order.tracking)}>Copy tracking number</DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() =>
+                navigator.clipboard.writeText(row.original.tracking)
+              }
+            >
+              Copy tracking number
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       )

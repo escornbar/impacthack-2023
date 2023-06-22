@@ -42,14 +42,14 @@ export function SiteHeader() {
             <ThemeToggle />
             <Button variant="ghost" className="relative w-8 h-8 rounded-full">
               <Avatar className="w-8 h-8">
-                <AvatarImage src="/avatars/01.png" alt="@user" />
+                <AvatarImage src="/" alt="@user" />
                 <AvatarFallback>SC</AvatarFallback>
               </Avatar>
             </Button>
           </nav>
 
           <DropdownMenu>
-            <DropdownMenuTrigger className="lg:hidden">
+            <DropdownMenuTrigger className="lg:hidden" asChild>
               <Button variant="ghost" size={'sm'} className="">
                 <Menu className="w-5 h-5" />
               </Button>

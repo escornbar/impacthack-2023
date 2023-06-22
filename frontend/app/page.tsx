@@ -3,7 +3,13 @@ import { Activity, CreditCard, DollarSign, FileText, Truck } from "lucide-react"
 
 import { siteConfig } from "@/config/site"
 import { buttonVariants } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import { Overview } from "@/components/overview"
 import { RecentSales } from "@/components/recent-sales"
 
@@ -34,9 +40,7 @@ export default function IndexPage() {
             </Card>
             <Card>
               <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-                <CardTitle className="text-sm font-medium">
-                  Sales
-                </CardTitle>
+                <CardTitle className="text-sm font-medium">Sales</CardTitle>
                 <CreditCard className="w-4 h-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
@@ -48,7 +52,9 @@ export default function IndexPage() {
             </Card>
             <Card>
               <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-                <CardTitle className="text-sm font-medium">Pending Invoices</CardTitle>
+                <CardTitle className="text-sm font-medium">
+                  Pending Invoices
+                </CardTitle>
                 <FileText className="w-4 h-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
@@ -74,26 +80,26 @@ export default function IndexPage() {
             </Card>
           </div>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-7">
-                <Card className="col-span-1 md:col-span-2 lg:col-span-4">
-                  <CardHeader>
-                    <CardTitle>Overview</CardTitle>
-                  </CardHeader>
-                  <CardContent className="pl-2">
-                    <Overview />
-                  </CardContent>
-                </Card>
-                <Card className="w-full col-span-1 md:col-span-2 lg:col-span-3">
-                  <CardHeader>
-                    <CardTitle>Recent Sales</CardTitle>
-                    <CardDescription>
-                      You made 265 sales this month.
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <RecentSales />
-                  </CardContent>
-                </Card>
-              </div>
+            <Card className="col-span-1 md:col-span-2 lg:col-span-4">
+              <CardHeader>
+                <CardTitle>Overview</CardTitle>
+              </CardHeader>
+              <CardContent className="pl-2">
+                <Overview />
+              </CardContent>
+            </Card>
+            <Card className="w-full col-span-1 md:col-span-2 lg:col-span-3">
+              <CardHeader>
+                <CardTitle>Recent Sales</CardTitle>
+                <CardDescription>
+                  You made 265 sales this month.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <RecentSales />
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
     </>
