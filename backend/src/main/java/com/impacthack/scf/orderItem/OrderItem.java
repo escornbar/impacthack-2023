@@ -6,7 +6,6 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.impacthack.scf.orderItemStatus.OrderItemStatus;
 import com.impacthack.scf.product.Product;
 import com.impacthack.scf.purchaseOrder.PurchaseOrder;
 
