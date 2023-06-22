@@ -9,18 +9,18 @@ public class InvoiceDTO {
   private Date paymentDeadline;
   private long supplier;
   private long distributor;
-  private long purchaseOrderId;
+  private long purchaseOrder;
   private long invoiceStatus;
   private double downPayment;
   private double remainingPayment;
 
-  public InvoiceDTO(double total, Date issuedDate, Date paymentDeadline, long supplier, long distributor, long purchaseOrderId, long invoiceStatus, double downPayment, double remainingPayment) {
+  public InvoiceDTO(double total, Date issuedDate, Date paymentDeadline, long supplier, long distributor, long purchaseOrder, long invoiceStatus, double downPayment, double remainingPayment) {
     this.total = total;
     this.issuedDate = issuedDate;
     this.paymentDeadline = paymentDeadline;
     this.supplier = supplier;
     this.distributor = distributor;
-    this.purchaseOrderId = purchaseOrderId;
+    this.purchaseOrder = purchaseOrder;
     this.invoiceStatus = invoiceStatus;
     this.downPayment = downPayment;
     this.remainingPayment = remainingPayment;
@@ -74,12 +74,12 @@ public class InvoiceDTO {
     this.remainingPayment = remainingPayment;
   }
 
-  public long getPurchaseOrderId() {
-    return purchaseOrderId;
+  public long getPurchaseOrder() {
+    return purchaseOrder;
   }
 
-  public void setPurchaseOrderId(long purchaseOrderId) {
-    this.purchaseOrderId = purchaseOrderId;
+  public void setPurchaseOrder(long purchaseOrder) {
+    this.purchaseOrder = purchaseOrder;
   }
 
   public Date getPaymentDeadline() {

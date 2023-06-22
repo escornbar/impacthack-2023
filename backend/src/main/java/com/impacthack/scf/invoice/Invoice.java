@@ -1,13 +1,18 @@
 package com.impacthack.scf.invoice;
 import jakarta.persistence.*;
 
+import java.io.InputStream;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Date;
 
 import org.hibernate.annotations.GenericGenerator;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.impacthack.scf.invoiceStatus.InvoiceStatus;
+import com.impacthack.scf.purchaseOrder.PurchaseOrder;
 
 @Entity
 @Table(name = "invoices")
@@ -24,13 +29,16 @@ public class Invoice {
   @Column(name = "issued_date")
   private Date issuedDate;
 
-    @JsonFormat(pattern="dd-MM-yyyy")
+  @JsonFormat(pattern="dd-MM-yyyy")
   @Column(name = "payment_deadline")
   private Date paymentDeadline;
 
-  @Column(name = "po_id")
-  private long purchaseOrderId;
+  // @JsonIgnoreProperties({"hibernateLazyInitializer"})
+  @OneToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name="po_id")
+  private PurchaseOrder purchaseOrder;
 
+  @JsonIgnoreProperties({"hibernateLazyInitializer"})
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name="invoice_status")
   private InvoiceStatus invoiceStatus;
@@ -55,21 +63,21 @@ public class Invoice {
 
   }
 
-  public Invoice(double total, Date issuedDate, Date paymentDeadline, long purchaseOrderId, InvoiceStatus invoiceStatus,  double downPayment, double remainingPayment) {
+  public Invoice(double total, Date issuedDate, Date paymentDeadline, PurchaseOrder purchaseOrder, InvoiceStatus invoiceStatus,  double downPayment, double remainingPayment) {
     this.total = total;
     this.issuedDate = issuedDate;
     this.paymentDeadline = paymentDeadline;
-    this.purchaseOrderId = purchaseOrderId;
+    this.purchaseOrder = purchaseOrder;
     this.invoiceStatus = invoiceStatus;
     this.downPayment = downPayment;
     this.remainingPayment = remainingPayment;
   }
 
-  public Invoice(double total, Date issuedDate, Date paymentDeadline, long purchaseOrderId, InvoiceStatus invoiceStatus, String invoiceFileName, String invoiceFileType, double downPayment, double remainingPayment, byte[] invoiceFileData) {
+  public Invoice(double total, Date issuedDate, Date paymentDeadline, PurchaseOrder purchaseOrder, InvoiceStatus invoiceStatus, String invoiceFileName, String invoiceFileType, double downPayment, double remainingPayment, byte[] invoiceFileData) {
     this.total = total;
     this.issuedDate = issuedDate;
     this.paymentDeadline = paymentDeadline;
-    this.purchaseOrderId = purchaseOrderId;
+    this.purchaseOrder = purchaseOrder;
     this.invoiceStatus = invoiceStatus;
     this.invoiceFileName = invoiceFileName;
     this.invoiceFileType = invoiceFileType;
@@ -142,12 +150,12 @@ public class Invoice {
     this.remainingPayment = remainingPayment;
   }
 
-  public long getPurchaseOrderId() {
-    return purchaseOrderId;
+  public PurchaseOrder getPurchaseOrder() {
+    return purchaseOrder;
   }
 
-  public void setPurchaseOrderId(long purchaseOrderId) {
-    this.purchaseOrderId = purchaseOrderId;
+  public void setPurchaseOrder(PurchaseOrder purchaseOrder) {
+    this.purchaseOrder = purchaseOrder;
   }
 
   public InvoiceStatus getInvoiceStatus() {
@@ -173,7 +181,7 @@ public class Invoice {
             ", total=" + total +
             ", issuedDate=" + issuedDate +
             ", paymentDeadline=" + paymentDeadline +
-            ", purchaseOrder=" + purchaseOrderId +
+            ", purchaseOrder=" + purchaseOrder +
             ", invoiceStatus=" + invoiceStatus +
             ", invoiceFileName='" + invoiceFileName + '\'' +
             ", invoiceFileType='" + invoiceFileType + '\'' +

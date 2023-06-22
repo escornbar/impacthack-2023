@@ -15,6 +15,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,7 +42,11 @@ public class InvoiceController {
 	@Autowired
 	InvoiceStatusRepository invoiceStatusRepository;
 
+	@Autowired
+	PurchaseOrderRepository purchaseOrderRepository;
+
 	@GetMapping("/invoices")
+	@Transactional
 	public ResponseEntity<List<Invoice>> getAllInvoices() {
 
 		try {
@@ -60,6 +65,7 @@ public class InvoiceController {
 	}
 
 	@GetMapping("/invoices/{id}")
+	@Transactional
 	public ResponseEntity<Invoice> getInvoiceById(@PathVariable("id") long id) {
 		Optional<Invoice> invoiceData = invoiceRepository.findById(id);
 
@@ -74,13 +80,14 @@ public class InvoiceController {
 	public ResponseEntity<Invoice> createInvoice(@RequestPart("data") InvoiceDTO invoiceDTO, @RequestPart("file") MultipartFile file) {
 
 			InvoiceStatus invoiceStatus = invoiceStatusRepository.findById(invoiceDTO.getInvoiceStatus()).orElse(null);
+			PurchaseOrder purchaseOrder = purchaseOrderRepository.findById(invoiceDTO.getPurchaseOrder()).orElse(null);
 
 			// Check if the supplier and distributor are found
 			if (invoiceStatus == null) {
 				return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 			}
 
-			Invoice invoiceData = new Invoice(invoiceDTO.getTotal(), invoiceDTO.getIssuedDate(), invoiceDTO.getPaymentDeadline(), invoiceDTO.getPurchaseOrderId(), invoiceStatus, invoiceDTO.getDownPayment(), invoiceDTO.getRemainingPayment());
+			Invoice invoiceData = new Invoice(invoiceDTO.getTotal(), invoiceDTO.getIssuedDate(), invoiceDTO.getPaymentDeadline(), purchaseOrder, invoiceStatus, invoiceDTO.getDownPayment(), invoiceDTO.getRemainingPayment());
 
 			try {
 			Invoice _invoice = invoiceFileStorageService.store(file, invoiceData);
@@ -104,7 +111,7 @@ public class InvoiceController {
 			_invoice.setPaymentDeadline(invoice.getPaymentDeadline());
 			_invoice.setRemainingPayment(invoice.getRemainingPayment());
 			_invoice.setInvoiceStatus(invoice.getInvoiceStatus());
-			_invoice.setPurchaseOrderId(invoice.getPurchaseOrderId());
+			_invoice.setPurchaseOrder(invoice.getPurchaseOrder());
 			_invoice.setInvoiceFileName(invoice.getInvoiceFileName());
 			_invoice.setInvoiceFileType(invoice.getInvoiceFileType());
 			_invoice.setInvoiceFileData(invoice.getInvoiceFileData());
