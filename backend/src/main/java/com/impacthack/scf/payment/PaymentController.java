@@ -21,9 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.impacthack.scf.invoice.Invoice;
 import com.impacthack.scf.invoice.InvoiceRepository;
-import com.impacthack.scf.invoiceStatus.InvoiceStatus;
-import com.impacthack.scf.purchaseOrder.PurchaseOrder;
-import com.impacthack.scf.purchaseOrder.PurchaseOrderRepository;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController

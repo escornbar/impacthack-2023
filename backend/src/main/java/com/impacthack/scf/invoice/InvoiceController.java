@@ -1,13 +1,9 @@
 package com.impacthack.scf.invoice;
 
-import com.impacthack.scf.distributor.Distributor;
 import com.impacthack.scf.invoiceStatus.InvoiceStatus;
 import com.impacthack.scf.invoiceStatus.InvoiceStatusRepository;
 import com.impacthack.scf.purchaseOrder.PurchaseOrder;
 import com.impacthack.scf.purchaseOrder.PurchaseOrderRepository;
-import com.impacthack.scf.purchaseOrderStatus.PurchaseOrderStatus;
-import com.impacthack.scf.supplier.Supplier;
-import com.impacthack.scf.supplier.SupplierRepository;
 
 import java.util.ArrayList;
 import java.util.List;

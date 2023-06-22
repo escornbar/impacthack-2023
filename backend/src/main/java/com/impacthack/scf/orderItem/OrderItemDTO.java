@@ -1,7 +1,5 @@
 package com.impacthack.scf.orderItem;
 
-import java.util.Date;
-
 public class OrderItemDTO{
 
 

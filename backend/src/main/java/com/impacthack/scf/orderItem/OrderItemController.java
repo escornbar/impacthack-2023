@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.impacthack.scf.invoiceStatus.InvoiceStatus;
 import com.impacthack.scf.product.Product;
 import com.impacthack.scf.product.ProductRepository;
 import com.impacthack.scf.purchaseOrder.PurchaseOrder;

@@ -1,7 +1,5 @@
 package com.impacthack.scf.invoice;
 
-import java.nio.file.Path;
-import java.util.stream.Stream;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
