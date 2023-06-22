@@ -27,13 +27,14 @@ public class OrderTracking {
   @Column(name = "estimated_delivery_date")
   private Date estimatedDeliveryDate;
 
-    @JsonFormat(pattern="dd-MM-yyyy")
+  @JsonFormat(pattern="dd-MM-yyyy")
   @Column(name = "actual_delivery_date")
   private Date actualDeliveryDate;
 
-    @Column(name = "remarks")
+  @Column(name = "remarks")
   private String remarks;
 
+  @JsonIgnoreProperties({"hibernateLazyInitializer"})
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name="order_tracking_status")
   private OrderTrackingStatus orderTrackingStatus;

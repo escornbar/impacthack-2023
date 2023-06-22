@@ -8,6 +8,7 @@ import java.util.Date;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.impacthack.scf.supplier.Supplier;
 import com.impacthack.scf.distributor.Distributor;
 
@@ -34,6 +35,7 @@ public class PurchaseOrder {
   @JoinColumn(name = "distributor_id")
   private Distributor distributor;
 
+  @JsonIgnoreProperties({"hibernateLazyInitializer"})
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "order_status")
   private PurchaseOrderStatus purchaseOrderStatus;
