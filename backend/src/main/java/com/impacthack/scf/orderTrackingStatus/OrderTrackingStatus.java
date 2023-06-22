@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 public class OrderTrackingStatus {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
 
   @Column(name = "name")
@@ -33,9 +33,9 @@ public class OrderTrackingStatus {
     this.name = name;
   }
 
-  @java.lang.Override
-  public java.lang.String toString() {
-    return "PurchaseOrderStatus{" +
+  @Override
+  public String toString() {
+    return "OrderTrackingStatus{" +
             "id=" + id +
             ", name='" + name + '\'' +
             '}';

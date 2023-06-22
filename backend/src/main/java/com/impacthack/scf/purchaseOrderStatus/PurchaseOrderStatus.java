@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 public class PurchaseOrderStatus {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
 
   @Column(name = "name")
@@ -23,6 +23,10 @@ public class PurchaseOrderStatus {
 
   public long getId() {
     return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
   }
 
   public String getName() {
