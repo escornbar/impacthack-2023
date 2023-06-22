@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.impacthack.scf.invoiceStatus.InvoiceStatus;
 import com.impacthack.scf.orderTrackingStatus.OrderTrackingStatus;
 import com.impacthack.scf.orderTrackingStatus.OrderTrackingStatusRepository;
+import com.impacthack.scf.purchaseOrder.PurchaseOrder;
+import com.impacthack.scf.purchaseOrder.PurchaseOrderRepository;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -30,17 +33,27 @@ public class OrderTrackingController {
 	@Autowired
 	OrderTrackingRepository orderTrackingRepository;
 
-
 	@Autowired
 	OrderTrackingStatusRepository orderTrackingStatusRepository;
 
+	@Autowired
+	PurchaseOrderRepository purchaseOrderRepository;
+
 	@GetMapping("/orderTrackings")
-	public ResponseEntity<List<OrderTracking>> getAllOrderTrackings() {
+	@Transactional
+	public ResponseEntity<List<OrderTracking>> getAllOrderTrackings(@RequestParam(required = false) Long poId) {
 
 		try {
 			List<OrderTracking> orderTrackings = new ArrayList<OrderTracking>();
+			PurchaseOrder purchaseOrder = null;
 
-			orderTrackingRepository.findAll().forEach(orderTrackings::add);
+			if (poId == null){
+				orderTrackingRepository.findAll().forEach(orderTrackings::add);
+			}
+			else{
+				purchaseOrder = purchaseOrderRepository.findById(poId).orElse(null);
+				orderTrackingRepository.findByPurchaseOrder(purchaseOrder).forEach(orderTrackings::add);
+			}
 
 			if (orderTrackings.isEmpty()) {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -53,6 +66,7 @@ public class OrderTrackingController {
 	}
 
 	@GetMapping("/orderTrackings/{id}")
+	@Transactional
 	public ResponseEntity<OrderTracking> getOrderTrackingById(@PathVariable("id") long id) {
 		Optional<OrderTracking> orderTrackingData = orderTrackingRepository.findById(id);
 
@@ -66,15 +80,16 @@ public class OrderTrackingController {
 	@PostMapping("/orderTrackings")
 	public ResponseEntity<OrderTracking> createOrderTracking(@RequestBody OrderTrackingDTO orderTrackingDTO) {
 
+			PurchaseOrder purchaseOrder = purchaseOrderRepository.findById(orderTrackingDTO.getPurchaseOrder()).orElse(null);
 			OrderTrackingStatus orderTrackingStatus = orderTrackingStatusRepository.findById(orderTrackingDTO.getOrderTrackingStatus()).orElse(null);
 
 			// Check if the supplier and distributor are found
-			if (orderTrackingStatus == null) {
+			if (purchaseOrder == null || orderTrackingStatus == null) {
 				return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 			}
 
 		try {
-			OrderTracking _orderTracking = orderTrackingRepository.save(new OrderTracking(orderTrackingDTO.getTrackingNo(), orderTrackingDTO.getPurchaseOrderId(), orderTrackingDTO.getEstimatedDeliveryDate(), orderTrackingDTO.getActualDeliveryDate(), orderTrackingDTO.getRemarks(), orderTrackingStatus));
+			OrderTracking _orderTracking = orderTrackingRepository.save(new OrderTracking(orderTrackingDTO.getTrackingNo(), purchaseOrder, orderTrackingDTO.getEstimatedDeliveryDate(), orderTrackingDTO.getActualDeliveryDate(), orderTrackingDTO.getRemarks(), orderTrackingStatus));
 			return new ResponseEntity<>(_orderTracking, HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -88,7 +103,7 @@ public class OrderTrackingController {
 		if (orderTrackingData.isPresent()) {
 			OrderTracking _orderTracking = orderTrackingData.get();
 			_orderTracking.setTrackingNo(orderTracking.getTrackingNo());
-			_orderTracking.setPurchaseOrderId(orderTracking.getPurchaseOrderId());
+			_orderTracking.setPurchaseOrder(orderTracking.getPurchaseOrder());
 			_orderTracking.setEstimatedDeliveryDate(orderTracking.getEstimatedDeliveryDate());
 			_orderTracking.setActualDeliveryDate(orderTracking.getActualDeliveryDate());
 			_orderTracking.setRemarks(orderTracking.getRemarks());
