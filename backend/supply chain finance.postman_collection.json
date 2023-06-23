@@ -1,0 +1,1365 @@
+{
+	"info": {
+		"_postman_id": "afc48ce5-b07c-4acc-9caa-883dcec0a67e",
+		"name": "supply chain finance",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25237576",
+		"_collection_link": "https://cloudy-shadow-573837.postman.co/workspace/ImpactHack-2023~00640d7f-b252-4a3d-9c92-bc320b593390/collection/25237576-afc48ce5-b07c-4acc-9caa-883dcec0a67e?action=share&creator=25237576&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Supplier",
+			"item": [
+				{
+					"name": "Create Supplier",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Supplier 2\",\n    \"address\": \"Bandar Utama, Selangor\",\n    \"contactName\": \"PIC 2\",\n    \"contactNo\": \"76543342\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/api/suppliers",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"suppliers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Supplier by Id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/api/suppliers/152",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"suppliers",
+								"152"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Suppliers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/api/suppliers",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"suppliers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Supplier by Id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Supplier 1\",\n    \"address\": \"Subang Jaya, Selangor\",\n    \"contactName\": \"PIC 1\",\n    \"contactNo\": \"012345678\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/api/suppliers/1",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"suppliers",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Supplier by Id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/api/suppliers/1",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"suppliers",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete All Suppliers",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/api/suppliers",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"suppliers"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Distributor",
+			"item": [
+				{
+					"name": "Create Distributor",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Distributor 2\",\n    \"address\": \"Malacca\",\n    \"contactName\": \"PIC B\",\n    \"contactNo\": \"432654332\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/api/distributors",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"distributors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Distributor by Id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/api/distributors/154",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"distributors",
+								"154"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Distributors",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/api/distributors",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"distributors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Distributor by Id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Distributor 1\",\n    \"address\": \"Bangsar, KL\",\n    \"contactName\": \"PIC A\",\n    \"contactNo\": \"012345678\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/api/distributors/1",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"distributors",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Distributor by Id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/api/distributors/1",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"distributors",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete All Distributors",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/api/distributors",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"distributors"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Account",
+			"item": [
+				{
+					"name": "Create Account",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"accountName\": \"Distributor 2 Bank PIC\",\n    \"accountNumber\": \"24511563\",\n    \"accountDateOpened\": \"02-05-2023\",\n    \"accountBalance\": 60000.0,\n    \"owner\": 155,\n    \"accountPurpose\": \"Furniture\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/api/accounts",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"accounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Account by Id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/api/accounts/1",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"accounts",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Accounts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/api/accounts",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"accounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Account by Id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Supplier 1\",\n    \"address\": \"Subang Jaya, Selangor\",\n    \"contactName\": \"PIC 1\",\n    \"contactNo\": \"012345678\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/api/accounts/1",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"accounts",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Account by Id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/api/accounts/1",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"accounts",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete All Accounts",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/api/accountsß",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"accountsß"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Purchase Order",
+			"item": [
+				{
+					"name": "Get All Purchase Orders",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/api/purchaseOrders",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"purchaseOrders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Purchase Order by Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/api/purchaseOrders/152",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"purchaseOrders",
+								"152"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Purchase Order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"value": "{\"total\": 5000, \"orderDate\" : \"15-07-2023\", \"supplier\": 153, \"distributor\": 155, \"purchaseOrderStatus\": 1}",
+									"contentType": "application/json",
+									"type": "text"
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/Users/xinle/Documents/Events/2023/10. ImpactHack 2023/impacthack-2023/backend/samples/sample_po2.pdf"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{server}}/api/purchaseOrders",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"purchaseOrders"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Invoice",
+			"item": [
+				{
+					"name": "Create Invoice",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"value": "{\"total\": 5000, \"issuedDate\" : \"20-08-2023\", \"paymentDeadline\": \"25-10-2023\", \"purchaseOrder\": 152, \"downPayment\": 50, \"remainingPayment\": 2500, \"invoiceStatus\": 1}",
+									"contentType": "application/json",
+									"type": "text"
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/Users/xinle/Documents/Events/2023/10. ImpactHack 2023/impacthack-2023/backend/samples/sample_invoice.pdf"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{server}}/api/invoices",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"invoices"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Invoices",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/api/invoices",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"invoices"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Invoice by Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/api/invoices/402",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"invoices",
+								"402"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "OrderTracking",
+			"item": [
+				{
+					"name": "Get All Order Trackings",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/api/orderTrackings",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"orderTrackings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Order Tracking by Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/api/orderTrackings/52",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"orderTrackings",
+								"52"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Order Trackings",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"trackingNo\": \"789101\",\n    \"purchaseOrder\": 152,\n    \"estimatedDeliveryDate\": \"01-09-2023\",\n    \"actualDeliveryDate\": \"05-09-2023\",\n    \"remarks\": \"\",\n    \"orderTrackingStatus\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/api/orderTrackings",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"orderTrackings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Order Trackings by PO Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/api/orderTrackings?poId=102",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"orderTrackings"
+							],
+							"query": [
+								{
+									"key": "poId",
+									"value": "102"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "OrderTrackingStatus",
+			"item": [
+				{
+					"name": "Get All Order Tracking Status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/api/orderTrackingStatus",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"orderTrackingStatus"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Order Tracking by Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/api/orderTrackingStatus/1",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"orderTrackingStatus",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Order Tracking Status",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"DELIVERED\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/api/orderTrackingStatus",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"orderTrackingStatus"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "InvoiceStatus",
+			"item": [
+				{
+					"name": "Get All Invoice Status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/api/invoiceStatus",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"invoiceStatus"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Invoice Status by Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/api/invoiceStatus/1",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"invoiceStatus",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Order Tracking Status",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"VOID\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/api/invoiceStatus",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"invoiceStatus"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PurchaseOrderStatus",
+			"item": [
+				{
+					"name": "Get All Purchase Order Status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/api/purchaseOrderStatus",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"purchaseOrderStatus"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Purchase Order Status by Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/api/purchaseOrderStatus/1",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"purchaseOrderStatus",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Purchase Order Status",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"CLOSED\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/api/purchaseOrderStatus",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"purchaseOrderStatus"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "LoanType",
+			"item": [
+				{
+					"name": "Get All Loan Types",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/api/loanType",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"loanType"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Loan Type by Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/api/loanType/1",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"loanType",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create loanType",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"BUSINESS LOAN\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/api/loanType",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"loanType"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Product",
+			"item": [
+				{
+					"name": "Get All Products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/api/products",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Product by Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/api/products/1",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"products",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Product 3\",\n    \"description\": \"This is Product 3\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/api/products",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"products"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "OrderItem",
+			"item": [
+				{
+					"name": "Get All OrderItems",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/api/orderItems",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"orderItems"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get OrderItem by Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/api/orderItems/1",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"orderItems",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create OrderItem",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"purchaseOrder\": 152,\n    \"product\": 54,\n    \"orderItemQuantity\": 2,\n    \"orderItemUnitPrice\": 500\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/api/orderItems",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"orderItems"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get OrderItem by PO Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/api/orderItems?poId=152",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"orderItems"
+							],
+							"query": [
+								{
+									"key": "poId",
+									"value": "152"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Transaction",
+			"item": [
+				{
+					"name": "Get All Transactions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/api/transactions",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"transactions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Transaction by Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/api/transactions/1",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"transactions",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Transaction",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"invoice\": 352,\n    \"transactionDate\": \"06-08-2023\",\n    \"transactionAmount\": 2000,\n    \"refNo\": \"85925\",\n    \"fromAccount\": 4,\n    \"toAccount\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/api/transactions",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"transactions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Transaction by Invoice Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/api/transactions?invoiceId=352",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"transactions"
+							],
+							"query": [
+								{
+									"key": "invoiceId",
+									"value": "352"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Transactions From Account",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/api/transactions/accounts/from/526636632",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"transactions",
+								"accounts",
+								"from",
+								"526636632"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Transactions To Account",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/api/transactions/accounts/to/12345678",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"transactions",
+								"accounts",
+								"to",
+								"12345678"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Transactions by Account",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/api/transactions/accounts/526636632",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"transactions",
+								"accounts",
+								"526636632"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Loan",
+			"item": [
+				{
+					"name": "Create Loan",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"loanInterestRate\": 0.05,\n    \"loanAmount\": 2500,\n    \"account\": 3,\n    \"loanStartDate\": \"01-08-2023\",\n    \"loanType\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/api/loans",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"loans"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Loans",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/api/loans",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"loans"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Loan by Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/api/loans/2",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"loans",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Loans for an Account",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/api/loans?accountId=2",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"loans"
+							],
+							"query": [
+								{
+									"key": "accountId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
