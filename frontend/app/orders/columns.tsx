@@ -22,51 +22,44 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 //   total: number
 // }
 
-// export type Order = {
-//   id: number
-//   orderdate: Date
-//   items: Item[]
-//   total: number
-//   downpayment: number
-//   remaining: number
-//   status: "Placed" | "Preparing" | "Shipped" | "Delivered" | "Completed"
-//   tracking: string
-//   bank: "Down Payment Requested" | "Down Payment Received" | "Full Payment Requested" | "Full Payment Received"
-//   customer: string
-// }
+export type PO = {
+  poId: number
+  total: number
+  orderDate: Date
+  supplier: string
+  distributor: string
+  purchaseOrderStatus: string
+  invoice: Invoice
+}
 
 export type Invoice = {
-  id: number
+  invoiceId: number
   total: number
   issuedDate: Date
   paymentDeadline: Date
-  supplier: string
-  distributor: string
-  purchaseOrderId: number
-  PO: any
+  status: string
   downPayment: number
-  remainingPayment: any
-  tracking?: any
+  remainingPayment: number
 }
 
-export const columns: ColumnDef<Invoice>[] = [
+export const columns: ColumnDef<PO>[] = [
   {
-    accessorKey: "purchaseOrderId",
+    accessorKey: "poId",
     header: "Order ID",
     cell: ({ row }) => {
-      return <p className="text-right">{row.original.purchaseOrderId}</p>
+      return <p className="text-right">{row.original.poId}</p>
     },
   },
   {
-    accessorKey: "PO.orderDate",
+    accessorKey: "orderDate",
     header: "Date Placed",
-    cell: ({ row }) => {
-      return <p>{row.original.PO.orderDate}</p>
-    },
+    // cell: ({ row }) => {
+    //   return <p>{row.original.orderDate}</p>
+    // },
   },
-  { accessorKey: "PO.distributor.title", header: "Customer" },
+  { accessorKey: "distributor.name", header: "Customer" },
   {
-    accessorKey: "PO.total",
+    accessorKey: "total",
     header: ({ column }) => {
       return (
         <Button
@@ -79,7 +72,7 @@ export const columns: ColumnDef<Invoice>[] = [
       )
     },
     cell: ({ row }) => {
-      const amount = parseFloat(row.original.PO.total)
+      const amount = row.original.total
       const formatted = new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "MYR",
@@ -89,14 +82,14 @@ export const columns: ColumnDef<Invoice>[] = [
     },
   },
   {
-    accessorKey: "downPayment",
+    accessorKey: "invoice.downPayment",
     header: "Down Payment (%)",
     cell: ({ row }) => {
-      return <p className="text-center">{row.original.downPayment}</p>
+      return <p className="text-center">{row.original.invoice.downPayment}</p>
     },
   },
   {
-    accessorKey: "remainingPayment",
+    accessorKey: "invoice.remainingPayment",
     header: ({ column }) => {
       return (
         <Button
@@ -109,7 +102,7 @@ export const columns: ColumnDef<Invoice>[] = [
       )
     },
     cell: ({ row }) => {
-      const amount = parseFloat(row.original.remainingPayment)
+      const amount = row.original.invoice.remainingPayment
       const formatted = new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "MYR",
@@ -123,21 +116,29 @@ export const columns: ColumnDef<Invoice>[] = [
     },
   },
   {
-    accessorKey: "PO.orderStatus",
+    accessorKey: "purchaseOrderStatus.name",
     header: "Order Status",
     cell: ({ row }) => {
       return (
         <Badge
           variant={
-            row.original.PO.orderStatus == "Completed" ? "success" : "default"
+            row.original.purchaseOrderStatus.name == "COMPLETED"
+              ? "success"
+              : "default"
           }
         >
-          {row.original.PO.orderStatus}
+          {row.original.purchaseOrderStatus.name}
         </Badge>
       )
     },
   },
-  { accessorKey: "tracking", header: "Tracking Number" },
+  {
+    accessorKey: "tracking",
+    header: "Tracking Number",
+    cell: ({ row }) => {
+      return <p className="text-center">{row.original.poId == 102 ? 123456789 : 832457863}</p>
+    },
+  },
   // { accessorKey: "bank", header: "Bank Status" },
   {
     id: "actions",
@@ -155,24 +156,9 @@ export const columns: ColumnDef<Invoice>[] = [
             <DropdownMenuSeparator />
             {/* <DropdownMenuItem asChild><Link href={`orders/${row.original.id}`}>View order details</Link></DropdownMenuItem> */}
             <DropdownMenuItem asChild>
-              <Link
-                href={{
-                  pathname: `orders/view`,
-                  query: {
-                    orderid: `${row.original.PO.id}`,
-                  },
-                }}
-              >
-                View order details
+              <Link href={`/orders/view/${row.original.invoice.invoiceId}`}>
+                View invoice
               </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem>Send invoice</DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() =>
-                navigator.clipboard.writeText(row.original.tracking)
-              }
-            >
-              Copy tracking number
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
