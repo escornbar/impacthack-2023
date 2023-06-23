@@ -15,6 +15,14 @@ export const siteConfig = {
       title: "Purchase Orders",
       href: "/orders",
     },
+    {
+      title: "Sales",
+      href: "/sales",
+    },
+    {
+      title: "Loans",
+      href: "/loans",
+    },
   ],
   links: {
     twitter: "https://twitter.com/shadcn",
