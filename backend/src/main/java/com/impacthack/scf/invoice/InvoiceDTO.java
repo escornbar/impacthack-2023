@@ -78,7 +78,7 @@ public class InvoiceDTO {
     return purchaseOrder;
   }
 
-  public void setPurchaseOrder(long purchaseOrder) {
+  public void setPurchaseOrderId(long purchaseOrder) {
     this.purchaseOrder = purchaseOrder;
   }
 
