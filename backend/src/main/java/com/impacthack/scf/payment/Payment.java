@@ -42,6 +42,13 @@ public class Payment {
     this.refNo = refNo;
   }
 
+  public Payment(long paymentId, Date paymentDate, double paymentAmount, String refNo) {
+    this.paymentId = paymentId;
+    this.paymentDate = paymentDate;
+    this.paymentAmount = paymentAmount;
+    this.refNo = refNo;
+  }
+
   public long getPaymentId() {
     return paymentId;
   }

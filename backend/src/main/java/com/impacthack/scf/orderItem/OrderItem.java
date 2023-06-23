@@ -41,6 +41,13 @@ public class OrderItem {
     this.orderItemUnitPrice = orderItemUnitPrice;
   }
 
+  public OrderItem(long orderItemId, Product product, int orderItemQuantity, double orderItemUnitPrice) {
+    this.orderItemId = orderItemId;
+    this.product = product;
+    this.orderItemQuantity = orderItemQuantity;
+    this.orderItemUnitPrice = orderItemUnitPrice;
+  }
+
   public long getOrderItemId() {
     return orderItemId;
   }

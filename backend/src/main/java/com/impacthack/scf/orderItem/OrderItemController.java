@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.impacthack.scf.orderTracking.OrderTracking;
 import com.impacthack.scf.product.Product;
 import com.impacthack.scf.product.ProductRepository;
 import com.impacthack.scf.purchaseOrder.PurchaseOrder;
@@ -41,26 +42,35 @@ public class OrderItemController {
 	public ResponseEntity<List<OrderItem>> getAllOrderItems(@RequestParam(required = false) Long poId) {
 
 		try {
-			List<OrderItem> orderItems = new ArrayList<OrderItem>();
+			List<OrderItem> orderItems = new ArrayList<>();
+			List<OrderItem> filteredOrderItems = new ArrayList<>();
+
 			PurchaseOrder purchaseOrder = null;
 
-			if (poId == null){
-				orderItemRepository.findAll().forEach(orderItems::add);
-			}
-			else{
+			if (poId == null) {
+				orderItemRepository.findAll().forEach(filteredOrderItems::add);
+			} else {
 				purchaseOrder = purchaseOrderRepository.findById(poId).orElse(null);
 				orderItemRepository.findByPurchaseOrder(purchaseOrder).forEach(orderItems::add);
+
+				// Remove the same Purchase Order from the JSON object returned
+				for (int i = 0; i < orderItems.size(); i++) {
+					OrderItem currOrderItem = orderItems.get(i);
+					OrderItem newOrderItem = new OrderItem(currOrderItem.getOrderItemId(), currOrderItem.getProduct(), currOrderItem.getOrderItemQuantity(), currOrderItem.getOrderItemUnitPrice());
+					filteredOrderItems.add(newOrderItem);
+				}
 			}
 
-			if (orderItems.isEmpty()) {
+			if (filteredOrderItems.isEmpty()) {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 			}
 
-			return new ResponseEntity<>(orderItems, HttpStatus.OK);
+			return new ResponseEntity<>(filteredOrderItems, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+
 
 	@GetMapping("/orderItems/{id}")
 	@Transactional

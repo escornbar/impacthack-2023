@@ -54,6 +54,15 @@ public class OrderTracking {
     this.orderTrackingStatus = orderTrackingStatus;
   }
 
+    public OrderTracking(long orderTrackingId, String trackingNo, Date estimatedDeliveryDate, Date actualDeliveryDate, String remarks, OrderTrackingStatus orderTrackingStatus) {
+    this.orderTrackingId = orderTrackingId;
+    this.trackingNo = trackingNo;
+    this.estimatedDeliveryDate = estimatedDeliveryDate;
+    this.actualDeliveryDate = actualDeliveryDate;
+    this.remarks = remarks;
+    this.orderTrackingStatus = orderTrackingStatus;
+  }
+
   public long getOrderTrackingId() {
     return orderTrackingId;
   }

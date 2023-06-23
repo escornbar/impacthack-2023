@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.impacthack.scf.invoice.Invoice;
 import com.impacthack.scf.invoice.InvoiceRepository;
+import com.impacthack.scf.orderTracking.OrderTracking;
 
 @RestController
 @RequestMapping("/api")
@@ -37,21 +38,30 @@ public class PaymentController {
 
 		try {
 			List<Payment> payments = new ArrayList<Payment>();
+			List<Payment> filteredPayments = new ArrayList<Payment>();
+
 			Invoice invoice = null;
 
 			if (invoiceId == null){
-				paymentRepository.findAll().forEach(payments::add);
+				paymentRepository.findAll().forEach(filteredPayments::add);
 			}
 			else{
 				invoice = invoiceRepository.findById(invoiceId).orElse(null);
 				paymentRepository.findByInvoice(invoice).forEach(payments::add);
+
+				// remove the same Invoice from json object returned
+				for (int i = 0; i < payments.size(); i++) {
+					Payment currPayment = payments.get(i);
+					Payment newPayment = new Payment(currPayment.getPaymentId(), currPayment.getPaymentDate(), currPayment.getPaymentAmount(), currPayment.getRefNo());
+					filteredPayments.add(newPayment);
+				}
 			}
 
-			if (payments.isEmpty()) {
+			if (filteredPayments.isEmpty()) {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 			}
 
-			return new ResponseEntity<>(payments, HttpStatus.OK);
+			return new ResponseEntity<>(filteredPayments, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}

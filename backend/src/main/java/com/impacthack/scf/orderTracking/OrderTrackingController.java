@@ -42,21 +42,29 @@ public class OrderTrackingController {
 
 		try {
 			List<OrderTracking> orderTrackings = new ArrayList<OrderTracking>();
+			List<OrderTracking> filteredOrderTrackings = new ArrayList<OrderTracking>();
 			PurchaseOrder purchaseOrder = null;
 
 			if (poId == null){
-				orderTrackingRepository.findAll().forEach(orderTrackings::add);
+				orderTrackingRepository.findAll().forEach(filteredOrderTrackings::add);
 			}
 			else{
 				purchaseOrder = purchaseOrderRepository.findById(poId).orElse(null);
 				orderTrackingRepository.findByPurchaseOrder(purchaseOrder).forEach(orderTrackings::add);
+
+				// remove the same Purchase Order from json object returned
+				for (int i = 0; i < orderTrackings.size(); i++) {
+					OrderTracking currOrderTracking = orderTrackings.get(i);
+					OrderTracking newOrderTracking = new OrderTracking(currOrderTracking.getOrderTrackingId(), currOrderTracking.getTrackingNo(), currOrderTracking.getEstimatedDeliveryDate(), currOrderTracking.getActualDeliveryDate(), currOrderTracking.getRemarks(), currOrderTracking.getOrderTrackingStatus());
+					filteredOrderTrackings.add(newOrderTracking);
+				}
 			}
 
-			if (orderTrackings.isEmpty()) {
+			if (filteredOrderTrackings.isEmpty()) {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 			}
 
-			return new ResponseEntity<>(orderTrackings, HttpStatus.OK);
+			return new ResponseEntity<>(filteredOrderTrackings, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
