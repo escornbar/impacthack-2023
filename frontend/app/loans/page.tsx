@@ -1,3 +1,6 @@
+import { Link } from "lucide-react"
+
+import { Button } from "@/components/ui/button"
 import {
   Table,
   TableBody,
@@ -37,7 +40,6 @@ export default function Loans() {
         </div>
         <div className="flex items-center justify-between space-y-2 overflow-x-auto">
           <Table>
-            <TableCaption>A list of your active loans</TableCaption>
             <TableHeader>
               <TableRow>
                 <TableHead className="">Loan Category</TableHead>
@@ -59,6 +61,11 @@ export default function Loans() {
               ))}
             </TableBody>
           </Table>
+        </div>
+        <div className="grid justify-end">
+          <Button>
+            <Link href="#">Next</Link>
+          </Button>
         </div>
       </div>
     </>

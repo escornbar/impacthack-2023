@@ -51,8 +51,8 @@ const steps = [
     id: "2",
     options: [
       {
-        value: "Hi! I'm looking for supply chain financing options.",
-        label: "Hi! I'm looking for supply chain financing options.",
+        value: "How healthy is my business doing right now?",
+        label: "How healthy is my business doing right now?",
         trigger: "3",
       },
     ],
@@ -60,15 +60,15 @@ const steps = [
   {
     id: "3",
     message:
-      "Hello! I'm here to assist you. Could you please provide me with your revenue goal and the time period you are targeting?",
+      "Overall, Tech Solutions Inc. has been performing exceptionally well. Your financial stability appears robust, with consistent revenue and profitability. Your ability to secure clients in diverse industries, such as healthcare, finance, and e-commerce, indicates a broad market reach and a strong reputation.",
     trigger: "4",
   },
   {
     id: "4",
     options: [
       {
-        label: "My revenue goal is RM100,000 within the next 6 months.",
-        value: "My revenue goal is RM100,000 within the next 6 months.",
+        value: "What is my outstanding payments for the loan right now?",
+        label: "What is my outstanding payments for the loan right now?",
         trigger: "5",
       },
     ],
@@ -76,17 +76,15 @@ const steps = [
   {
     id: "5",
     message:
-      "Great! Based on your revenue goal, I recommend exploring the following supply chain financing options: Invoice Factoring, Purchase Order Financing, Supply Chain Loans or Trade Finance",
+      "Based on our data, the current outstanding payment for your loan with Standard Chartered Bank is $347,500 across 16 monthly repayments.",
     trigger: "6",
   },
   {
     id: "6",
     options: [
       {
-        label:
-          "Thanks for the suggestions! Can you provide more information on invoice factoring?",
-        value:
-          "Thanks for the suggestions! Can you provide more information on invoice factoring?",
+        value: "What types of loan is my business eligible for?",
+        label: "What types of loan is my business eligible for?",
         trigger: "7",
       },
     ],
@@ -94,15 +92,15 @@ const steps = [
   {
     id: "7",
     message:
-      "Certainly! Invoice factoring is a financing solution where you sell your accounts receivable to a factoring company at a discounted rate. In return, you receive immediate cash, which can help you bridge the cash flow gap caused by pending customer payments. This option can provide quick access to funds without adding debt to your balance sheet.",
+      "Based on your credit score, you are eligible for the Working Capital Loan up to $500,000. If you are interested, you may apply via the Loans tab in the navigation bar.",
     trigger: "8",
   },
   {
     id: "8",
     options: [
       {
-        label: "How can I get started with invoice factoring?",
-        value: "How can I get started with invoice factoring?",
+        value: "What can I do to improve my company's credit score?",
+        label: "What can I do to improve my company's credit score?",
         trigger: "9",
       },
     ],
@@ -110,25 +108,7 @@ const steps = [
   {
     id: "9",
     message:
-      "To get started with invoice factoring, you'll need to find a reputable factoring company that suits your business needs. They will assess your invoices and determine the amount they are willing to advance to you. You can then submit your invoices to the factoring company, and upon verification, they will provide you with the agreed-upon funding, usually within a few business days.",
-    trigger: "10",
-  },
-  {
-    id: "10",
-    options: [
-      {
-        label:
-          "Thank you for the information! I'll explore these options further.",
-        value:
-          "Thank you for the information! I'll explore these options further.",
-        trigger: "11",
-      },
-    ],
-  },
-  {
-    id: "11",
-    message:
-      "You're welcome! If you have any more questions or need assistance in the future, feel free to reach out. Good luck with your supply chain financing journey!",
+      "Based on our data on your company, you may consider establishing trade lines and maintaining a stable finances to improve your company's credit score.",
     end: true,
   },
 ]
