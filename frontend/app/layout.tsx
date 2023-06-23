@@ -17,7 +17,6 @@ export const metadata: Metadata = {
     default: siteConfig.name,
     template: `%s - ${siteConfig.name}`,
   },
-  description: siteConfig.description,
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "white" },
     { media: "(prefers-color-scheme: dark)", color: "black" },
@@ -129,9 +128,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
           )}
         >
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <div className="relative flex min-h-screen flex-col">
+            <div className="relative flex flex-col min-h-screen">
               <SiteHeader />
-              <div className="container mx-auto flex-1 pb-8">{children}</div>
+              <div className="container flex-1 pb-8 mx-auto">{children}</div>
               <div className="flex justify-end">
                 <ThemeProvider2 theme={theme}>
                   <ChatBot
