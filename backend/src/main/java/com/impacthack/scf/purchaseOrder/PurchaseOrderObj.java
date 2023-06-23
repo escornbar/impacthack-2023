@@ -1,66 +1,27 @@
 package com.impacthack.scf.purchaseOrder;
-import com.impacthack.scf.distributor.Distributor;
-import com.impacthack.scf.purchaseOrderStatus.PurchaseOrderStatus;
-import jakarta.persistence.*;
 
-import java.util.Arrays;
 import java.util.Date;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.impacthack.scf.distributor.Distributor;
+import com.impacthack.scf.invoice.InvoiceObj;
+import com.impacthack.scf.purchaseOrderStatus.PurchaseOrderStatus;
 import com.impacthack.scf.supplier.Supplier;
 
-@Entity
-@Table(name = "purchaseOrders")
-public class PurchaseOrder {
+public class PurchaseOrderObj {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
   private long poId;
-
-  @Column(name = "total")
   private double total;
-
-  @JsonFormat(pattern="dd-MM-yyyy")
-  @Column(name = "order_date")
   private Date orderDate;
-
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "supplier_id")
   private Supplier supplier;
-
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "distributor_id")
   private Distributor distributor;
-
-  @JsonIgnoreProperties({"hibernateLazyInitializer"})
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "order_status")
   private PurchaseOrderStatus purchaseOrderStatus;
-
-  @Column(name = "po_file_name")
   private String poFileName;
-
-  @Column(name = "po_file_type")
   private String poFileType;
-
-  @Lob
-  @Column(name = "po_file_data")
   private byte[] poFileData;
+  private InvoiceObj invoice;
 
-  public PurchaseOrder() {
-
-  }
-
-  public PurchaseOrder(double total, Date orderDate, Supplier supplier, Distributor distributor, PurchaseOrderStatus purchaseOrderStatus) {
-    this.total = total;
-    this.orderDate = orderDate;
-    this.supplier = supplier;
-    this.distributor = distributor;
-    this.purchaseOrderStatus = purchaseOrderStatus;
-  }
-
-  public PurchaseOrder(double total, Date orderDate, Supplier supplier, Distributor distributor, PurchaseOrderStatus purchaseOrderStatus, String poFileName, String poFileType, byte[] poFileData) {
+  public PurchaseOrderObj(long poId, double total, Date orderDate, Supplier supplier, Distributor distributor, PurchaseOrderStatus purchaseOrderStatus, String poFileName, String poFileType, byte[] poFileData, InvoiceObj invoice) {
+    this.poId = poId;
     this.total = total;
     this.orderDate = orderDate;
     this.supplier = supplier;
@@ -69,6 +30,7 @@ public class PurchaseOrder {
     this.poFileName = poFileName;
     this.poFileType = poFileType;
     this.poFileData = poFileData;
+    this.invoice = invoice;
   }
 
   public long getPoId() {
@@ -143,18 +105,11 @@ public class PurchaseOrder {
     this.poFileData = poFileData;
   }
 
-  @Override
-  public String toString() {
-    return "PurchaseOrder{" +
-            "poId=" + poId +
-            ", total=" + total +
-            ", orderDate=" + orderDate +
-            ", supplier=" + supplier +
-            ", distributor=" + distributor +
-            ", purchaseOrderStatus=" + purchaseOrderStatus +
-            ", poFileName='" + poFileName + '\'' +
-            ", poFileType='" + poFileType + '\'' +
-            ", poFileData=" + Arrays.toString(poFileData) +
-            '}';
+  public InvoiceObj getInvoice() {
+    return invoice;
+  }
+
+  public void setInvoice(InvoiceObj invoice) {
+    this.invoice = invoice;
   }
 }

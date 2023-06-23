@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,9 +20,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.impacthack.scf.supplier.Supplier;
 import com.impacthack.scf.supplier.SupplierRepository;
-
 import com.impacthack.scf.distributor.Distributor;
 import com.impacthack.scf.distributor.DistributorRepository;
+import com.impacthack.scf.invoice.Invoice;
+import com.impacthack.scf.invoice.InvoiceObj;
+import com.impacthack.scf.invoice.InvoiceRepository;
 import com.impacthack.scf.purchaseOrderStatus.PurchaseOrderStatus;
 import com.impacthack.scf.purchaseOrderStatus.PurchaseOrderStatusRepository;
 
@@ -44,10 +47,15 @@ public class PurchaseOrderController {
   	  @Autowired
   private PurchaseOrderStatusRepository purchaseOrderStatusRepository;
 
+    @Autowired
+  private InvoiceRepository invoiceRepository;
+
 	@GetMapping("/purchaseOrders")
-	public ResponseEntity<List<PurchaseOrder>> getAllPurchaseOrders() {
+	@Transactional
+	public ResponseEntity<List<PurchaseOrderObj>> getAllPurchaseOrders() {
 		try {
 			List<PurchaseOrder> purchaseOrders = new ArrayList<PurchaseOrder>();
+			List<PurchaseOrderObj> filteredPurchaseOrders = new ArrayList<PurchaseOrderObj>();
 
 			purchaseOrderRepository.findAll().forEach(purchaseOrders::add);
 
@@ -55,18 +63,87 @@ public class PurchaseOrderController {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 			}
 
-			return new ResponseEntity<>(purchaseOrders, HttpStatus.OK);
+			// add invoice data per purchase order
+			for (int i = 0; i < purchaseOrders.size(); i++) {
+				PurchaseOrder currPurchaseOrder = purchaseOrders.get(i);
+				Invoice invoice = invoiceRepository.findByPurchaseOrder(currPurchaseOrder);
+				InvoiceObj newInvoice = null;
+
+				if (invoice != null){
+				 newInvoice = new InvoiceObj(
+					invoice.getInvoiceId(),
+				 invoice.getTotal(), 
+				invoice.getIssuedDate(), 
+				invoice.getPaymentDeadline(), 
+				invoice.getInvoiceStatus(), 
+				invoice.getInvoiceFileName(),
+				invoice.getInvoiceFileType(), 
+				invoice.getDownPayment(),
+				invoice.getRemainingPayment(),
+				invoice.getInvoiceFileData());
+				}
+
+
+				PurchaseOrderObj newPurchaseOrderObj = new PurchaseOrderObj(
+					currPurchaseOrder.getPoId(),
+					currPurchaseOrder.getTotal(),
+					currPurchaseOrder.getOrderDate(),
+					currPurchaseOrder.getSupplier(),
+					currPurchaseOrder.getDistributor(),
+					currPurchaseOrder.getPurchaseOrderStatus(),
+					currPurchaseOrder.getPoFileName(),
+					currPurchaseOrder.getPoFileType(),
+					currPurchaseOrder.getPoFileData(),
+					newInvoice
+				);
+				filteredPurchaseOrders.add(newPurchaseOrderObj);
+			}
+
+			return new ResponseEntity<>(filteredPurchaseOrders, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
 	@GetMapping("/purchaseOrders/{id}")
-	public ResponseEntity<PurchaseOrder> getPurchaseOrderById(@PathVariable("id") long id) {
+	@Transactional
+	public ResponseEntity<PurchaseOrderObj> getPurchaseOrderById(@PathVariable("id") long id) {
 		Optional<PurchaseOrder> purchaseOrderData = purchaseOrderRepository.findById(id);
 
 		if (purchaseOrderData.isPresent()) {
-			return new ResponseEntity<>(purchaseOrderData.get(), HttpStatus.OK);
+			PurchaseOrder purchaseOrder = purchaseOrderData.get();
+			Invoice invoice = invoiceRepository.findByPurchaseOrder(purchaseOrder);
+				InvoiceObj newInvoice = null;
+
+
+				if (invoice != null){
+				 newInvoice = new InvoiceObj(
+					invoice.getInvoiceId(),
+				 invoice.getTotal(), 
+				invoice.getIssuedDate(), 
+				invoice.getPaymentDeadline(), 
+				invoice.getInvoiceStatus(), 
+				invoice.getInvoiceFileName(),
+				invoice.getInvoiceFileType(), 
+				invoice.getDownPayment(),
+				invoice.getRemainingPayment(),
+				invoice.getInvoiceFileData());
+				}
+
+			PurchaseOrderObj newPurchaseOrderObj = new PurchaseOrderObj(
+					purchaseOrder.getPoId(),
+					purchaseOrder.getTotal(),
+					purchaseOrder.getOrderDate(),
+					purchaseOrder.getSupplier(),
+					purchaseOrder.getDistributor(),
+					purchaseOrder.getPurchaseOrderStatus(),
+					purchaseOrder.getPoFileName(),
+					purchaseOrder.getPoFileType(),
+					purchaseOrder.getPoFileData(),
+					newInvoice
+				);
+
+			return new ResponseEntity<>(newPurchaseOrderObj, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
@@ -79,7 +156,6 @@ public class PurchaseOrderController {
 			Distributor distributor = distributorRepository.findById(purchaseOrderDTO.getDistributor()).orElse(null);
 
 			PurchaseOrderStatus purchaseOrderStatus = purchaseOrderStatusRepository.findById(purchaseOrderDTO.getPurchaseOrderStatus()).orElse(null);
-
 
 			// Check if the supplier and distributor are found
 			if (supplier == null || distributor == null) {
@@ -112,7 +188,7 @@ public class PurchaseOrderController {
 			_purchaseOrder.setPoFileName(purchaseOrder.getPoFileName());
 			_purchaseOrder.setPoFileType(purchaseOrder.getPoFileType());
 			_purchaseOrder.setPoFileData(purchaseOrder.getPoFileData());
-
+			
 			return new ResponseEntity<>(purchaseOrderRepository.save(_purchaseOrder), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
