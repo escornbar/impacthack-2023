@@ -1,3 +1,5 @@
+import { Percent } from "lucide-react"
+
 import { Badge } from "@/components/ui/badge"
 import {
   Card,
@@ -99,25 +101,27 @@ export default async function View({ params }: { params: { id: number } }) {
         </div>
         <div className="grid grid-cols-3 gap-8 py-10">
           {transactions.map((transaction: any) => (
-            <Card>
-              <CardHeader>
-                <CardTitle>Transaction {transaction.transactionId}</CardTitle>
-                <CardDescription>{transaction.transactionDate}</CardDescription>
+            <Card className="bg-primary">
+              <CardHeader className="flex flex-row items-start justify-between pb-2 space-y-0">
+                <div>
+                  <CardTitle className="text-primary-foreground">
+                    Transaction {transaction.transactionId}
+                  </CardTitle>
+                  <CardDescription className="text-primary-foreground">
+                    {transaction.transactionDate}
+                  </CardDescription>
+                </div>
+                <Badge variant={"secondary"}>{transaction.repaymentRate*100}%</Badge>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-2 pb-4">
-                  <h2 className="pb-4 text-3xl font-bold tracking-tight">
+                <div className="grid pb-4">
+                  <h2 className="text-3xl font-bold tracking-tight text-primary-foreground">
                     MYR {transaction.transactionAmount}
                   </h2>
-                  <div>
-                    
-                  <p className="text-sm text-muted-foreground">
-                    Repayment Rate: {transaction.repaymentRate}
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    After Repayment: MYR {transaction.transactionAmountAfterRepayment}
-                  </p>
-                  </div>
+                    <p className="text-sm text-primary-foreground">
+                      After Repayment: MYR{" "}
+                      {transaction.transactionAmountAfterRepayment}
+                    </p>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <Card>
@@ -125,8 +129,12 @@ export default async function View({ params }: { params: { id: number } }) {
                       <CardTitle>Sender</CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <p>{transaction.fromAccount.accountNumber}</p>
-                      <p>{transaction.fromAccount.accountName}</p>
+                      <p className="text-sm leading-7">
+                        {transaction.fromAccount.accountNumber}
+                      </p>
+                      <p className="text-sm leading-7">
+                        {transaction.fromAccount.accountName}
+                      </p>
                     </CardContent>
                   </Card>
                   <Card>
@@ -134,8 +142,12 @@ export default async function View({ params }: { params: { id: number } }) {
                       <CardTitle>Recipient</CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <p>{transaction.toAccount.accountNumber}</p>
-                      <p>{transaction.toAccount.accountName}</p>
+                      <p className="text-sm leading-7">
+                        {transaction.toAccount.accountNumber}
+                      </p>
+                      <p className="text-sm leading-7">
+                        {transaction.toAccount.accountName}
+                      </p>
                     </CardContent>
                   </Card>
                 </div>

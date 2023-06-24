@@ -1,4 +1,4 @@
-import { Link } from "lucide-react"
+import { AlertOctagon, ChevronDown, Link } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -26,14 +26,9 @@ const loans = [
     outstandingAmount: 1000,
   },
   {
-    category: "Working Capital Loan",
-    totalAmount: 5000,
-    outstandingAmount: 1000,
-  },
-  {
-    category: "Working Capital Loan",
-    totalAmount: 5000,
-    outstandingAmount: 1000,
+    category: "Business Loan",
+    totalAmount: 10000,
+    outstandingAmount: 2500,
   },
 ]
 
@@ -51,8 +46,10 @@ export default function Loans() {
             <TableHeader>
               <TableRow>
                 <TableHead className="">Loan Category</TableHead>
-                <TableHead className="text-right">Total Amount</TableHead>
-                <TableHead className="text-right">Outstanding Amount</TableHead>
+                <TableHead className="text-right">Total Amount (MYR)</TableHead>
+                <TableHead className="text-right">
+                  Outstanding Amount (MYR)
+                </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -62,7 +59,7 @@ export default function Loans() {
                   <TableCell className="text-right">
                     {loan.totalAmount}
                   </TableCell>
-                  <TableCell className="text-right text-destructive">
+                  <TableCell className="font-bold text-right text-destructive">
                     {loan.outstandingAmount}
                   </TableCell>
                 </TableRow>
@@ -73,15 +70,17 @@ export default function Loans() {
         <div className="grid justify-end py-4">
           <Dialog>
             <DialogTrigger asChild>
-              <Button variant={'ghost'} size={'sm'}>
-                <Link href="#" className="w-4 h-4">Next</Link>
+              <Button variant={"ghost"}>
+                <ChevronDown className="w-4 h-4 mr-2"/> View more
               </Button>
             </DialogTrigger>
             <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Time to close your book</DialogTitle>
+              <DialogHeader >
+                  
+                <AlertOctagon className="w-6 h-6" />
+                <DialogTitle>Time to close your book!</DialogTitle>
                 <DialogDescription>
-                  Close your book now to continue using other features
+                  Close your book now to continue using other features.
                 </DialogDescription>
               </DialogHeader>
             </DialogContent>

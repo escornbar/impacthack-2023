@@ -1,16 +1,23 @@
-"use client"
+"use client";
 
-import "@/styles/globals.css"
-import { Metadata } from "next"
-import ChatBot from "react-simple-chatbot"
-import { ThemeProvider as ThemeProvider2 } from "styled-components"
+import "@/styles/globals.css";
+import { Metadata } from "next";
+import ChatBot from "react-simple-chatbot";
+import { ThemeProvider as ThemeProvider2 } from "styled-components";
 
-import { siteConfig } from "@/config/site"
-import { fontSans } from "@/lib/fonts"
-import { cn } from "@/lib/utils"
-import { SiteHeader } from "@/components/site-header"
-import { TailwindIndicator } from "@/components/tailwind-indicator"
-import { ThemeProvider } from "@/components/theme-provider"
+
+
+import { siteConfig } from "@/config/site";
+import { fontSans } from "@/lib/fonts";
+import { cn } from "@/lib/utils";
+import { SiteHeader } from "@/components/site-header";
+import { TailwindIndicator } from "@/components/tailwind-indicator";
+import { ThemeProvider } from "@/components/theme-provider";
+import { Inter } from "@next/font/google";
+
+
+
+
 
 export const metadata: Metadata = {
   title: {
@@ -116,11 +123,16 @@ interface RootLayoutProps {
   children: React.ReactNode
 }
 
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+})
+
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <>
-      <html lang="en" suppressHydrationWarning>
-        <head />
+      <html lang="en" className={inter.className} suppressHydrationWarning>
+        {/* <head /> */}
         <body
           className={cn(
             "bg-background min-h-screen font-sans antialiased",
